@@ -1,0 +1,19 @@
+[
+    {
+        "dni": 1,
+        "compra": [
+            {
+                "producto": "heladera",
+                "importe": 44000.0,
+                "cuotas": 3,
+                "importe_cuotas": 14666.666666666666
+            },
+            {
+                "producto": "pantalon",
+                "importe": 78000.0,
+                "cuotas": 9,
+                "importe_cuotas": 8666.666666666666
+            }
+        ]
+    }
+]
