@@ -1,0 +1,27 @@
+[
+    {
+        "dni": 1111,
+        "tarjeta_credito_visa": [
+            {
+                "fecha": "26/02/2026",
+                "periodo": "2026-02",
+                "producto": "Netflix",
+                "importe": 12000.0,
+                "cuotas_totales": 6,
+                "cuota_actual": 1,
+                "importe_cuota": 2000.0,
+                "tarjeta": "credito_visa"
+            },
+            {
+                "fecha": "26/02/2026",
+                "periodo": "2026-02",
+                "producto": "Supermercado",
+                "importe": 43241.0,
+                "cuotas_totales": 1,
+                "cuota_actual": 1,
+                "importe_cuota": 43241.0,
+                "tarjeta": "credito_visa"
+            }
+        ]
+    }
+]

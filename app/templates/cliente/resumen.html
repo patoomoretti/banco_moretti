@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Resúmenes de Cuenta</h2>
+        <p class="content-page-subtitle">Consultá los cierres y consumos detallados de tus tarjetas</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-file-invoice-dollar form-card-icon"></i>
+                <h3 class="universal-form__title">Seleccionar Tarjeta y Período</h3>
+            </div>
+
+            <form method="POST" class="form-layout-pro">
+                <div class="stats-grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div class="form-field-group">
+                        <label class="form-field-label">Tarjeta</label>
+                        <select class="input-pro-field select-pro" name="tarjeta_id">
+                            {% if visa_c %}
+                                <option value="credito_visa">Visa Crédito</option>
+                            {% endif %}
+                            {% if master_c %}
+                                <option value="credito_master">Mastercard Crédito</option>
+                            {% endif %}
+                            {% if visa_d %}
+                                <option value="debito_visa">Visa Débito</option>
+                            {% endif %}
+                            {% if master_d %}
+                                <option value="debito_master">Mastercard Débito</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
+                    <div class="form-field-group">
+                        <label class="form-field-label">Mes del Resumen</label>
+                        <select class="input-pro-field select-pro" name="periodo">
+                            {% for p in periodos %}
+                                <option value="{{ p }}">{{ p }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Ver Resumen</span>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+
+            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+            {% if resultado %}
+            <div class="resumen-detalle">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-card__label">Total a Pagar</span>
+                        <div class="stat-card__value" style="color: #ef4444;">${{ resultado.total_mes }}</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__label">Período</span>
+                        <div class="stat-card__value" style="font-size: 1.4rem;">{{ resultado.periodo }}</div>
+                    </div>
+                </div>
+
+                {% if resultado.consumos %}
+                    <h4 style="margin: 25px 0 15px; color: #1e293b; font-weight: 700;">Detalle de Consumos</h4>
+                    <div class="activity-section">
+                        <div class="activity-list">
+                            {% for item in resultado.consumos %}
+                            <div class="activity-item">
+                                <div class="activity-item__info">
+                                    <span class="activity-item__type">{{ item.producto }}</span>
+                                    <span class="activity-item__date">{{ item.fecha }} | Cuota {{ item.cuota_actual }} de {{ item.cuotas_totales }}</span>
+                                </div>
+                                <div class="activity-item__amount negative">
+                                    -${{ item.importe_cuota }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="empty-msg" style="text-align: center; padding: 20px;">
+                        No hay consumos registrados para este período.
+                    </p>
+                {% endif %}
+
+            </div>
+
+            {% elif resultado is not none and resultado.consumos is defined and not resultado.consumos %}
+                <p class="empty-msg" style="text-align: center; padding: 20px;">
+                    No hay consumos registrados para este período.
+                </p>
+
+            {% else %}
+                <p class="empty-msg" style="text-align: center; padding: 20px;">
+                    Seleccioná una tarjeta para visualizar el detalle de cuenta.
+                </p>
+            {% endif %}
+
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+/* --- DISEÑO DE CABECERA --- */
+.form-title-display {
+    font-size: 3rem;
+    color: #004696;
+    font-weight: 800;
+    margin-bottom: 5px;
+    letter-spacing: -2px;
+    text-align: center;
+}
+
+.form-title-separator {
+    width: 40px;
+    height: 4px;
+    background: #004696;
+    margin: 10px auto 20px; /* Centra la barrita decorativa */
+    border-radius: 2px;
+}
+
+.form-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+/* --- FORMULARIO CENTRADO --- */
+.form-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los hijos (inputs y botón) */
+    width: 100%;
+}
+
+.form-group-centered {
+    width: 100%;
+    max-width: 380px; /* Tamaño ideal para lectura en móvil y desktop */
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-label-centered {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.form-input-premium {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    text-align: center; /* Centra el texto que escribe el usuario */
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.form-input-premium:focus {
+    outline: none;
+    border-color: #004696;
+    box-shadow: 0 10px 15px -3px rgba(0, 70, 150, 0.05);
+}
+
+/* --- BOTÓN MEJORADO --- */
+.form-btn-premium {
+    width: 100%;
+    max-width: 380px;
+    background-color: #004696;
+    color: white;
+    padding: 18px;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-btn-premium:hover {
+    background-color: #00336e;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 20px -5px rgba(0, 70, 150, 0.2);
+}
+
+/* --- LINKS --- */
+.form-links-refined {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.95rem;
+}
+
+.form-links-refined a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.form-links-refined a:hover {
+    color: #004696;
+}
+
+.dot-separator {
+    color: #cbd5e1;
+}

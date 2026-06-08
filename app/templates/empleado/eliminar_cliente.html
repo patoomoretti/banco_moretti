@@ -1,0 +1,46 @@
+{% extends "empleado/empleado.html" %} 
+
+{% block area_trabajo %}
+<div class="action-container">
+    <div class="action-header danger-header">
+        <h3><i class="fas fa-user-minus"></i> Dar de Baja Cliente</h3>
+        <p>Ingrese el DNI del cliente para proceder con la eliminación definitiva de su cuenta.</p>
+    </div>
+
+    <form class="admin-form" action="{{ url_for('empleado.eliminar_cliente_view') }}" method="POST">
+        <div class="form-grid">
+            
+            <div class="form-group full-width">
+                <label >Número de DNI del Cliente</label>
+                <div class="input-warning-wrapper">
+                    <i class="fas fa-id-card"></i>
+                    <input type="number" id="dni" name="dni" placeholder="Ingrese DNI sin puntos" required>
+                </div>
+                <small class="help-text-danger">Esta acción eliminará todos los registros asociados al cliente.</small>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="motivo">Motivo de la baja</label>
+                <select id="motivo" name="motivo" class="form-select-pro">
+                    <option value="solicitud">Solicitud del cliente</option>
+                    <option value="fraude">Actividad sospechosa / Fraude</option>
+                    <option value="inactividad">Inactividad prolongada</option>
+                    <option value="otro">Otro motivo</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-actions delete-actions">
+            <button type="submit" class="btn-delete" onclick="return confirm('¿Está seguro de que desea eliminar permanentemente a este cliente?')">
+                <i class="fas fa-trash-alt"></i> Eliminar Definitivamente
+            </button>
+        </div>
+
+        {% if mensaje %}
+            <div class="alert-error">
+                <i class="fas fa-exclamation-triangle"></i> {{ mensaje }}
+            </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

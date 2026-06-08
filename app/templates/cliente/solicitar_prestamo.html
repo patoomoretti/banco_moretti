@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Préstamos Personales</h2>
+        <p class="content-page-subtitle">Obtené financiación inmediata con acreditación en el acto</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-hand-holding-dollar form-card-icon"></i>
+                <h3 class="universal-form__title">Simulá tu préstamo</h3>
+            </div>
+
+            {% if mensaje %}
+                <div class="form-alert-pro">{{ mensaje }}</div>
+            {% endif %}
+
+            <form method="POST" class="form-layout-pro">
+                
+                <div class="form-field-group">
+                    <label class="form-field-label">Monto a solicitar</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol">$</span>
+                        <input class="input-pro-field" type="number" step="1000" name="monto" id="monto_prestamo" 
+                               oninput="simularPrestamo()" placeholder="Ej: 50000" required>
+                    </div>
+                    <small class="text-muted">Monto máximo pre-aprobado: $500.000</small>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Destino de los fondos</label>
+                    <select class="input-pro-field select-pro" name="destino" required>
+                        <option value="viajes">Viajes y Turismo</option>
+                        <option value="reformas">Refacciones del Hogar</option>
+                        <option value="vehiculo">Compra de Vehículo</option>
+                        <option value="otros">Otros consumos</option>
+                    </select>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Plazo de devolución</label>
+                    <select class="input-pro-field select-pro" name="plazo" id="plazo_prestamo" onchange="simularPrestamo()">
+                        <option value="12">12 meses (TNA 45%)</option>
+                        <option value="24">24 meses (TNA 55%)</option>
+                        <option value="36">36 meses (TNA 65%)</option>
+                        <option value="48">48 meses (TNA 75%)</option>
+                    </select>
+                </div>
+
+                <div class="form-field-group highlight-simulacion">
+                    <label class="form-field-label">Cuota mensual estimada (IVA incluido)</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol"><i class="fa-solid fa-calendar-check"></i></span>
+                        <input class="input-pro-field input-readonly" id="cuota_estimada" readonly placeholder="Calculando...">
+                    </div>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Solicitar Ahora</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+function simularPrestamo() {
+    const monto = parseFloat(document.getElementById('monto_prestamo').value);
+    const plazo = parseInt(document.getElementById('plazo_prestamo').value);
+    const displayCuota = document.getElementById('cuota_estimada');
+
+    if (monto > 0 && plazo > 0) {
+        // Tasas nominales anuales ficticias según el plazo
+        let tna = 0.45;
+        if (plazo === 24) tna = 0.55;
+        else if (plazo === 36) tna = 0.65;
+        else if (plazo === 48) tna = 0.75;
+
+        // Cálculo simple de interés francés aproximado
+        const tasaMensual = tna / 12;
+        const cuota = (monto * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -plazo));
+        
+        displayCuota.value = "$" + cuota.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    } else {
+        displayCuota.value = "";
+    }
+}
+</script>
+
+{% endblock %}

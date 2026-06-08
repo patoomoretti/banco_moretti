@@ -1,0 +1,40 @@
+// === Base ===
+@use "base/variables";
+@use "base/mixins" as m;
+@use "base/reset";
+
+// === Componentes reutilizables ===
+@use "components/navbar";
+@use "components/menu";
+
+// === Layout ===
+@use "layout/footer.scss";
+
+// === Estilos por página ===
+@use "pages/index";
+@use "pages/login";
+@use "pages/logout";
+@use "pages/sobre_nosotros";
+@use "pages/cliente/usuario";
+@use "pages/cliente/movimientos_transferencia";
+@use "pages/cliente/formularios";
+@use "pages/empleado/empleado";
+@use "pages/empleado/datos_cliente";
+@use "pages/empleado/area_trabajo";
+@use "pages/empleado/dashboard";
+
+
+
+/* Contenedor que junta Menú + Contenido */
+.layout-wrapper {
+    display: flex;       /* Pone el menú al lado del contenido */
+    min-height: 100vh;   /* Asegura que el fondo cubra toda la pantalla */
+    background-color: #f1f5f9; /* Color de fondo gris claro para el dashboard */
+}
+
+/* El área del contenido donde van las tarjetas */
+.main-content {
+    flex-grow: 1;        /* Toma todo el espacio restante */
+    padding: 40px;       /* Espacio interno para que nada toque los bordes */
+    overflow-y: auto;    /* Por si el contenido es muy largo */
+}

@@ -1,0 +1,38 @@
+<nav class="main-navbar">
+    <div class="main-navbar__container">
+        
+        <div class="main-navbar__left">
+            <a class="main-navbar__logo">
+                <i class="fa-solid fa-building-columns"></i> 
+                <span>Banco Moretti</span>
+            </a>
+        </div>
+
+        <div class="main-navbar__right">
+            <ul class="main-navbar__links">
+                {% if session.get("role") %}
+                    
+                    {% if session.get("role") == "cliente" %}
+                        <li><a href="/cliente/inicio" class="main-navbar__link">Inicio</a></li>
+                    {% endif %}
+
+                    {% if session.get("role") == "empleado" %}
+                        <li><a href="/menu" class="main-navbar__link main-navbar__link--staff">Panel Staff</a></li>
+                    {% endif %}
+
+                    <li>
+                        <a href="/logout" class="main-navbar__btn-exit">
+                            <span>Salir</span>
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </a>
+                    </li>
+
+                {% else %}
+                    <li><a href="/" class="main-navbar__link">Inicio</a></li>
+                    <li><a href="/sobre_nosotros" class="main-navbar__link">Sobre nosotros</a></li>
+                    <li><a href="/login" class="main-navbar__btn-login">Ingresar</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

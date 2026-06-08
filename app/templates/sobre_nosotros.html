@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="about">
+    
+    <div class="about__header container">
+        <div>
+            <h1 class="about__title">Banco Moretti</h1>
+            <p class="about__subtitle">
+                Un banco creado para acompañarte en cada paso de tu vida financiera.
+            </p>
+        </div>
+
+        <img src="/static/img/logo.png" alt="Banco Moretti" class="about__image">
+    </div>
+
+    <div class="about__section container">
+        <h2 class="about__section-title">Nuestra Historia</h2>
+        <p class="about__text">
+            Desde nuestros inicios, Banco Moretti nació con el propósito de brindar soluciones financieras simples, rápidas y seguras para todos nuestros clientes. Creemos en la innovación, en el trato personalizado y en el crecimiento conjunto.
+            <br><br>
+            Hoy seguimos expandiéndonos, incorporando tecnología moderna y herramientas digitales que facilitan tu vida diaria, sin perder el toque humano que nos caracteriza.
+        </p>
+    </div>
+
+    <div class="about__section container">
+        <h2 class="about__section-title">Nuestros Valores</h2>
+
+        <div class="about__values">
+            <div class="value-card">
+                <h3>Transparencia</h3>
+                <p>Cada operación es clara, directa y sin letra chica.</p>
+            </div>
+
+            <div class="value-card">
+                <h3>Seguridad</h3>
+                <p>Protegemos tus datos y tu dinero con tecnología de primer nivel.</p>
+            </div>
+
+            <div class="value-card">
+                <h3>Innovación</h3>
+                <p>Siempre un paso adelante para darte mejores herramientas.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="about__section container">
+        <h2 class="about__section-title">Nuestro Equipo</h2>
+
+        <div class="team-grid">
+
+            <div class="team-card">
+                <img src="/static/img/p1.jpg" class="team-card__img" alt="Persona 1">
+                <h3 class="team-card__name">Patricio Moretti</h3>
+                <p class="team-card__role">Fundador & Director</p>
+            </div>
+
+            <div class="team-card">
+                <img src="/static/img/p2.jpg" class="team-card__img" alt="Persona 2">
+                <h3 class="team-card__name">María López</h3>
+                <p class="team-card__role">Gerente de Operaciones</p>
+            </div>
+
+            <div class="team-card">
+                <img src="/static/img/p3.jpg" class="team-card__img" alt="Persona 3">
+                <h3 class="team-card__name">Juan Pérez</h3>
+                <p class="team-card__role">Atención al Cliente</p>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

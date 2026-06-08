@@ -1,0 +1,52 @@
+{% extends "empleado/empleado.html" %} 
+{% block area_trabajo %}
+<div class="action-container">
+    <div class="action-header">
+        <h3><i class="fas fa-search"></i> Consultar Cliente</h3>
+        <p>Ingrese el DNI para recuperar la información completa del usuario.</p>
+    </div>
+
+    <form class="search-bar" action="{{ url_for('empleado.buscar_cliente_view') }}" method="POST">
+        <input type="number" name="dni_busqueda" placeholder="Ingrese DNI del cliente..." required>
+        <button type="submit" class="btn-search"><i class="fas fa-search"></i> Buscar</button>
+    </form>
+
+    <hr class="separator">
+
+    {% if cliente %}
+        <div class="client-profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h4>{{ cliente.nombre }} {{ cliente.apellido }}</h4>
+                    <span class="badge-status">Cliente Activo</span>
+                </div>
+            </div>
+
+            <div class="profile-details-grid">
+                <div class="detail-item">
+                    <label>Documento (DNI)</label>
+                    <p>{{ cliente.dni }}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Saldo Actual</label>
+                    <p class="balance-text">${{ cliente.saldo }}</p>
+                </div>
+            </div>
+
+            <div class="profile-actions" style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem; text-align: right;">
+                <a href="{{ url_for('empleado.perfil_cliente', dni=cliente.dni) }}" class="btn-search" style="text-decoration: none; background-color: #3498db;">
+                    <i class="fas fa-user-cog"></i> Gestionar Perfil Completo
+                </a>
+            </div>
+        </div>
+    {% elif mensaje %}
+        <div class="alert-error">
+            <i class="fas fa-exclamation-circle"></i> {{ mensaje }}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

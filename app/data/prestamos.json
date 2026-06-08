@@ -1,0 +1,33 @@
+[
+    {
+        "dni": 1111,
+        "prestamos_activos": [
+            {
+                "id": 1,
+                "monto_solicitado": 50000,
+                "monto_cuota": 11250.0,
+                "cuotas_totales": 6,
+                "cuotas_pagas": 0,
+                "tasa_interes": 35,
+                "motivo": "Personal",
+                "fecha_solicitud": "20-02-26",
+                "total": 67500.0,
+                "estado": "activo"
+            },
+            {
+                "id": 2,
+                "monto_solicitado": 20000,
+                "monto_cuota": 4000.0,
+                "cuotas_totales": 6,
+                "cuotas_pagas": 0,
+                "tasa_interes": 20,
+                "motivo": "Personal",
+                "fecha_solicitud": "23-02-26",
+                "total": 24000.0,
+                "estado": "activo"
+            }
+        ],
+        "pagos_realizados": [],
+        "prestamos_cancelados": []
+    }
+]

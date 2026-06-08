@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Operaciones de Cuenta</h2>
+        <p class="content-page-subtitle">Enviá dinero de forma segura a otros usuarios de Moretti Bank</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-paper-plane form-card-icon"></i>
+                <h3 class="universal-form__title">Realizar Transferencia</h3>
+            </div>
+
+            {% if mensaje %}
+                <div class="form-alert-pro">{{ mensaje }}</div>
+            {% endif %}
+
+            <form method="POST" class="form-layout-pro">
+                
+                <div class="form-field-group">
+                    <label class="form-field-label" for="dni_destino">DNI del Destinatario</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol"><i class="fa-solid fa-user"></i></span>
+                        <input id="dni_destino" name="dni_destino" type="text" class="input-pro-field" placeholder="Ingresá el DNI" required>
+                    </div>
+                    <small class="form-field-help">Verificá bien el número antes de confirmar.</small>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label" for="monto">Monto a enviar</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol">$</span>
+                        <input id="monto" name="monto" type="number" min="1" step="0.01" class="input-pro-field" placeholder="0.00" required>
+                    </div>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Enviar Dinero</span>
+                        <i class="fa-solid fa-circle-check"></i>
+                    </button>
+
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+

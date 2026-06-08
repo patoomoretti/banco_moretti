@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="form-container">
+    <div class="form-card">
+
+        <header class="form-header">
+            <h2 class="form-title-display">Staff Login</h2>
+            <div class="form-title-separator admin-separator"></div>
+            <p class="form-subtitle">Portal de Gestión Interna - Moretti Bank</p>
+        </header>
+
+        {% if mensaje %}
+        <div class="form-error-simple">{{ mensaje }}</div>
+        {% endif %}
+
+        <form action="/admin" method="POST" class="form-centered">
+            
+            <div class="form-group-centered">
+                <label class="form-label-centered">DNI de Empleado</label>
+                <input class="form-input-premium admin-input" name="dni" placeholder="Ingresá tu legajo" required>
+            </div>
+
+            <div class="form-group-centered">
+                <label class="form-label-centered">Contraseña de Sistema</label>
+                <input class="form-input-premium admin-input" type="password" name="pin" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="form-btn-premium admin-btn">Acceder al Sistema</button>
+        </form>
+
+        <div class="form-links-refined">
+            <span class="security-tag">
+                <i class="fa-solid fa-shield-halved"></i> Acceso restringido a personal autorizado
+            </span>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

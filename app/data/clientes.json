@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Patricio",
+        "apellido": "Moretti",
+        "dni": 1111,
+        "direccion": "Cramer 3454",
+        "piso": "1",
+        "departamento": "2",
+        "telefono": "1182314951",
+        "email": "patriciomoretti@hotmail.com"
+    },
+    {
+        "nombre": "Carla",
+        "apellido": "Moretti",
+        "dni": 2222,
+        "direccion": "Nunez 2711",
+        "piso": "5",
+        "departamento": "A",
+        "telefono": "1562315612",
+        "email": "carlamoretti@hotmail.com"
+    },
+    {
+        "nombre": "Marcelo",
+        "apellido": "Moretti",
+        "dni": 3333,
+        "direccion": "Maure 3825",
+        "piso": "6",
+        "departamento": "A",
+        "telefono": "1165846344",
+        "email": "marcelomoretti@hotmail.com"
+    }
+]

@@ -1,0 +1,55 @@
+<nav class="side-nav">
+    <!-- <div class="side-nav__brand">
+        {% if session.get("dni") %}
+            <span>Hola</span> {{nombre}}
+        {% endif %}
+    </div> -->
+
+    <div class="side-nav__group">
+        <p class="side-nav__label">Operaciones</p>
+        <a class="side-nav__link" href="/cliente/depositar_dinero">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>Depositar</span>
+        </a>
+        <a class="side-nav__link" href="/cliente/retirar_dinero">
+            <i class="fa-solid fa-money-bill-transfer"></i>
+            <span>Retirar</span>
+        </a>
+        <a class="side-nav__link" href="/cliente/transferir_dinero">
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            <span>Transferir</span>
+        </a>
+        <a class="side-nav__link" href="/cliente/solicitar_prestamo">
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            <span>Solicitar Prestamo</span>
+        </a>
+    </div>
+
+    <div class="side-nav__group">
+        <p class="side-nav__label">Tarjetas</p>
+        <a class="side-nav__link" href="/cliente/consumo_tarjeta">
+            <i class="fa-solid fa-credit-card"></i>
+            <span>Consumos</span>
+        </a>
+        <a class="side-nav__link" href="/cliente/pagar_tarjeta">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Pagar Tarjeta</span>
+        </a>
+        <a class="side-nav__link" href="/cliente/resumen_tarjeta">
+            <i class="fa-solid fa-file-invoice"></i>
+            <span>Resumen</span>
+        </a>
+    </div>
+
+    <div class="side-nav__group">
+        <p class="side-nav__label">Historial</p>
+        <a class="side-nav__link" href="/cliente/transferencias">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Transferencias</span>
+        </a>
+        <a class="side-nav__link" href="/cliente/movimientos">
+            <i class="fa-solid fa-list-ul"></i>
+            <span>Movimientos</span>
+        </a>
+    </div>
+</nav>

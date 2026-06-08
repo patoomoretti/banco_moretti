@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Gestión de Tarjetas</h2>
+        <p class="content-page-subtitle">Registrá tus consumos y financiá tus compras en cuotas</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-credit-card form-card-icon"></i>
+                <h3 class="universal-form__title">Registrar nuevo consumo</h3>
+            </div>
+
+            {% if mensaje %}
+                <div class="form-alert-pro">{{ mensaje }}</div>
+            {% endif %}
+
+            <form method="POST" class="form-layout-pro">
+                
+                <div class="form-field-group">
+                    <label class="form-field-label">Producto / Comercio</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol"><i class="fa-solid fa-store"></i></span>
+                        <input class="input-pro-field" name="producto" placeholder="Ej: Amazon, Supermercado..." required>
+                    </div>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Seleccionar Tarjeta</label>
+                    <select class="input-pro-field select-pro" name="tipo_tarjeta" required>
+                        {% if visa_c %}
+                            <option value="credito_visa">Visa Credito</option>
+                        {% endif %}
+                        {% if master_c %}
+                            <option value="credito_master">Mastercard Credito</option>
+                        {% endif %}
+                        {% if visa_d %}
+                            <option value="debito_visa">Visa Debito</option>
+                        {% endif %}
+                        {% if master_d %}
+                            <option value="debito_master">Mastercard Debito</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Importe Total base</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol">$</span>
+                        <input class="input-pro-field" type="number" step="0.01" name="importe" id="importe" oninput="calcularCuotas()" placeholder="0.00" required>
+                    </div>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Cuotas</label>
+                    <select class="input-pro-field select-pro" name="cuotas" id="cuotas" onchange="calcularCuotas()">
+                        <option value="1">1 pago </option>
+                        <option value="3">3 cuotas (10% interés)</option>
+                        <option value="6">6 cuotas (20% interés)</option>
+                        <option value="12">12 cuotas (30% interés)</option>
+                    </select>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Importe por Cuota (con interés)</label>
+                    <div class="input-pro-wrapper">
+                        <input class="input-pro-field input-readonly" name="importe_cuotas" id="importe_cuotas" readonly placeholder="-">
+                    </div>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Confirmar Consumo</span>
+                        <i class="fa-solid fa-check-double"></i>
+                    </button>
+                    <!-- <a class="btn-link-back" href="/cliente/inicio">Volver al inicio</a> -->
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+function calcularCuotas() {
+    const importeBase = parseFloat(document.getElementById('importe').value);
+    const cuotas = parseInt(document.getElementById('cuotas').value);
+    const displayCuotas = document.getElementById('importe_cuotas');
+
+    if (importeBase > 0 && cuotas > 0) {
+        let interes = 0;
+        if (cuotas === 3) interes = 0.10;
+        else if (cuotas === 6) interes = 0.20;
+        else if (cuotas === 12) interes = 0.30;
+
+        const importeTotalConInteres = importeBase * (1 + interes);
+        const valorCuota = (importeTotalConInteres / cuotas).toFixed(2);
+        
+        displayCuotas.value = "$" + valorCuota;
+    } else {
+        displayCuotas.value = "";
+    }
+}
+</script>
+
+{% endblock %}

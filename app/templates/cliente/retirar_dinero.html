@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Operaciones de Cuenta</h2>
+        <p class="content-page-subtitle">Extraé tus fondos de manera segura desde cualquier terminal</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-money-bill-transfer form-card-icon"></i>
+                <h3 class="universal-form__title">Retirar dinero</h3>
+            </div>
+
+            {% if mensaje %}
+                <div class="form-alert-pro">{{ mensaje }}</div>
+            {% endif %}
+
+            <form method="POST" class="form-layout-pro">
+                
+                <div class="form-field-group">
+                    <label class="form-field-label" for="monto">Monto a retirar</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol">$</span>
+                        <input id="monto" name="monto" type="number" min="1" step="0.01" class="input-pro-field" placeholder="0.00" required>
+                    </div>
+                    <small class="form-field-help">Asegurate de tener saldo disponible suficiente en tu cuenta.</small>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Confirmar Retiro</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

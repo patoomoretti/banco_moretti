@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="form-container">
+    <div class="form-card">
+
+        <h2 class="form-title">Crear cuenta</h2>
+
+        {% if mensaje %}
+            <p class="form-message">{{ mensaje }}</p>
+        {% endif %}
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label class="form-label">DNI</label>
+                <input type="number" name="dni" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">PIN</label>
+                <input type="number" name="pin" class="form-input" required>
+            </div>
+
+            <button type="submit" class="form-btn">Registrar</button>
+        </form>
+
+        <div class="form-links">
+            <a href="/login" class="form-link">Ya tengo una cuenta</a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+

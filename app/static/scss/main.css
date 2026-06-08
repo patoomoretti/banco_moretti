@@ -1,0 +1,702 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #f5f6f7;
+  color: #1a1a1a;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Centra todo verticalmente */
+  padding: 15px 30px; /* El primer número (15px) le da espacio arriba y abajo */
+  background-color: #004696; /* Tu color azul */
+  height: 70px; /* Ajusta los px a tu gusto, pero que sea fijo */
+  padding: 0 30px; /* Eliminamos el padding vertical para que mande el height */
+}
+
+/* BLOQUE IZQUIERDO */
+.navbar__left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar__logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+}
+
+/* BLOQUE CENTRAL (Menú al otro extremo) */
+.navbar__center {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.navbar__links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+.navbar__links a:hover {
+  opacity: 0.8;
+}
+
+.navbar__links li {
+  margin-right: 20px; /* Separa el 'Menu' del botón 'Salir' */
+}
+
+/* BLOQUE DERECHO */
+.navbar__right {
+  display: flex;
+  align-items: center; /* Alinea Menu y Salir entre sí */
+  height: 100%;
+}
+.navbar__right .navbar__dni {
+  font-weight: 600;
+}
+.navbar__right .navbar__logout {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.navbar__right .navbar__logout:hover {
+  background-color: #333;
+}
+
+/* --- ENCABEZADO DE SECCIÓN --- */
+.dashboard__welcome {
+  font-size: 2.2rem; /* Más imponente, como las apps modernas */
+  color: #004696; /* Tu azul institucional */
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 5px;
+}
+
+.dashboard__subtitle {
+  font-size: 1.1rem;
+  color: #64748b; /* Un gris azulado más elegante */
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+/* --- AJUSTE DE LA CARD --- */
+/* --- DISEÑO DE LA CAJA (VOLVIENDO AL ANTERIOR) --- */
+.form-card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.form-title {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* --- BOTÓN DEPOSITAR (AZUL PLANO) --- */
+.form-btn {
+  width: 100%;
+  background-color: #004696;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.form-btn:hover {
+  background-color: #00336e;
+}
+
+/* --- ESTILO DE INPUT --- */
+.form-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #004696;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 70, 150, 0.1);
+}
+
+.dropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropdown__btn {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: white;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.dropdown__btn:hover {
+  border-color: #004AAD;
+  background: rgba(0, 74, 173, 0.06);
+}
+
+.dropdown__options {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding-left: 0.3rem;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+.dropdown.open .dropdown__options {
+  max-height: 300px;
+  opacity: 1;
+  padding: 0.5rem 0.3rem;
+}
+
+.dropdown__option {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.dropdown__option input[type=radio] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.footer {
+  background: #0d1b2a;
+  color: #e0e6ed;
+  padding: 2.5rem 0;
+  margin-top: 3rem;
+}
+.footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 2rem;
+}
+.footer .footer-section {
+  flex: 1 1 250px;
+}
+.footer .footer-section h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #fff;
+  border-left: 4px solid #1b263b;
+  padding-left: 0.5rem;
+}
+.footer .footer-section p {
+  margin: 0.3rem 0;
+  color: #d3d9e3;
+}
+.footer .footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+.footer .footer-section ul li {
+  margin: 0.3rem 0;
+}
+.footer .footer-section ul li a {
+  color: #d3d9e3;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.footer .footer-section ul li a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.footer .footer-copy {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #a7b1c2;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 2rem;
+  gap: 2rem;
+}
+.hero .hero-text {
+  max-width: 50%;
+}
+.hero .hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #0d1b2a;
+}
+.hero .hero-text p {
+  font-size: 1.2rem;
+  color: #415a77;
+  margin-bottom: 2rem;
+}
+.hero .hero-text .btn-primary {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: #1b263b;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.hero .hero-text .btn-primary:hover {
+  background: #0d1b2a;
+}
+.hero .hero-img {
+  width: 40%;
+  max-width: 450px;
+}
+
+.features {
+  margin: 3rem auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 0 2rem;
+}
+.features .feature-card {
+  width: 280px;
+  background: #f8f9fa;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+.features .feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.features .feature-card i {
+  font-size: 2.3rem;
+  color: #1b263b;
+  margin-bottom: 1rem;
+}
+.features .feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #0d1b2a;
+}
+.features .feature-card p {
+  color: #415a77;
+  font-size: 0.95rem;
+}
+
+.logout-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #E6F0FF;
+}
+
+.logout-card {
+  background: #FFFFFF;
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  max-width: 420px;
+}
+.logout-card h1 {
+  font-size: 2rem;
+  color: #004AAD;
+  margin-bottom: 1rem;
+}
+.logout-card p {
+  color: #555555;
+  margin-bottom: 2rem;
+}
+.logout-card .btn-primary {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  background: #004AAD;
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.logout-card .btn-primary:hover {
+  background: rgb(0, 56.5479768786, 132.2);
+}
+
+.about {
+  padding: 3rem 0;
+  /** Valores */
+  /** Equipo */
+}
+.about .container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+.about__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.about__header .about__title {
+  font-size: 2.7rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.about__header .about__subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  max-width: 500px;
+}
+.about__header .about__image {
+  width: 240px;
+  opacity: 0.9;
+}
+.about__section {
+  margin-bottom: 3rem;
+}
+.about__section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1.2rem;
+}
+.about__section .about__text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #1a1a1a;
+}
+.about .about__values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.about .value-card {
+  background: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(26, 26, 26, 0.08);
+  border: 1px solid rgba(26, 26, 26, 0.05);
+}
+.about .value-card h3 {
+  color: #004AAD;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+.about .value-card p {
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.about .team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+.about .team-card {
+  background: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(26, 26, 26, 0.08);
+  border: 1px solid rgba(26, 26, 26, 0.05);
+  transition: transform 0.2s ease;
+}
+.about .team-card:hover {
+  transform: translateY(-4px);
+}
+.about .team-card__img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+}
+.about .team-card__name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.about .team-card__role {
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+.dashboard__layout {
+  display: flex;
+  gap: 2rem;
+}
+
+/* MENÚ VERTICAL */
+.dashboard__menu--sidebar {
+  padding-top: 86px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Esto da espacio entre cada botón */
+}
+
+/* CONTENIDO PRINCIPAL */
+.dashboard__content {
+  flex: 1;
+}
+
+/* TARJETAS EN FILAS */
+.dashboard__cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.dashboard {
+  width: 100%;
+  padding: 2rem 3rem;
+  color: #1a1a1a;
+}
+.dashboard__header {
+  margin-bottom: 2rem;
+}
+.dashboard__welcome {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #004AAD;
+}
+.dashboard__subtitle {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+.dashboard__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* --- TARJETA SALDO DISPONIBLE --- */
+.card-balance {
+  background: linear-gradient(135deg, #004AAD, rgb(0, 106.7225433526, 249.5));
+  color: white;
+  padding: 1.8rem;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.card-balance__title {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+.card-balance__amount {
+  margin-top: 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+/* --- TARJETA DE CRÉDITO --- */
+.card-cc {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.card-cc__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.card-cc__body p {
+  margin: 0.3rem 0;
+}
+
+/* --- MENÚ DE ACCIONES --- */
+.dashboard__menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.menu-item {
+  background: white;
+  padding: 1.3rem;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  transition: 0.3s;
+  font-weight: 600;
+}
+.menu-item i {
+  font-size: 1.4rem;
+  color: #004AAD;
+}
+.menu-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+.menu-item.logout {
+  background: #1a1a1a;
+  color: white;
+}
+.menu-item.logout i {
+  color: white;
+}
+.menu-item.logout:hover {
+  background: rgb(51.5, 51.5, 51.5);
+}
+
+/* ============================================================
+   TARJETA DE MOVIMIENTOS A TODA LA LINEA
+   ============================================================ */
+.card-movimientos {
+  width: 100%; /* OCUPA TODA LA FILA */
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  padding: 20px;
+}
+
+/* Encabezado de tarjetas */
+.card-cc__header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Contenedor principal de la lista de movimientos */
+.movimientos-lista {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  overflow: hidden; /* Para que los bordes redondeados funcionen bien */
+}
+
+/* Estilo para cada fila de movimiento */
+.mov-item {
+  display: grid;
+  grid-template-columns: 150px 1fr 120px; /* Fecha, Detalle/Tipo, Monto */
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.mov-item:hover {
+  background-color: #f9f9f9; /* Efecto sutil al pasar el mouse */
+}
+
+.mov-item:last-child {
+  border-bottom: none;
+}
+
+/* Columna de Fecha */
+.mov-fecha {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* Columna de Info (Tipo y Detalle) */
+.mov-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.mov-tipo {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.mov-detalle {
+  font-size: 0.8rem;
+  color: #777;
+  font-style: italic;
+}
+
+/* Columna de Monto */
+.mov-monto {
+  text-align: right;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Colores según si es ingreso o egreso */
+.mov-monto.positivo {
+  color: #2e7d32; /* Verde bancario */
+}
+
+.mov-monto.negativo {
+  color: #c62828; /* Rojo bancario */
+}
+
+/* Estilo para cuando no hay movimientos */
+.sin-movimientos {
+  padding: 40px;
+  text-align: center;
+  color: #999;
+}
+
+.mov-detalle {
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 2px;
+}/*# sourceMappingURL=main.css.map */

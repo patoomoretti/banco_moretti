@@ -1,0 +1,44 @@
+{% extends "empleado/empleado.html" %} 
+
+{% block area_trabajo %}
+<div class="action-container">
+    <div class="action-header">
+        <h3><i class="fas fa-university"></i> Apertura de Cuenta Bancaria</h3>
+        <p>Complete los datos para vincular una nueva cuenta al cliente.</p>
+    </div>
+
+    <form class="admin-form" action="{{ url_for('empleado.crear_cuenta_view') }}" method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="dni">DNI del Cliente</label>
+                <input type="number" id="dni" name="dni" placeholder="Ingrese DNI registrado" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo_cuenta">Tipo de Cuenta</label>
+                <select id="tipo_cuenta" name="tipo_cuenta" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required>
+                    <option value="" selected disabled>Seleccione una opción</option>
+                    <option value="Caja de Ahorro">Caja de Ahorro</option>
+                    <option value="Cuenta Corriente">Cuenta Corriente</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="grid-column: span 2;">
+                <p style="color: #666; font-style: italic;">
+                    <i class="fas fa-info-circle"></i> El número de cuenta se generará automáticamente de forma aleatoria al guardar.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Crear Cuenta</button>
+        </div>
+
+        {% if mensaje %}
+            <div class="alert-error">
+                <i class="fas fa-exclamation-circle"></i> {{ mensaje }}
+            </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

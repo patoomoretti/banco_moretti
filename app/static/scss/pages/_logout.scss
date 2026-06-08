@@ -1,0 +1,45 @@
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
+.logout-container {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary-light;
+}
+
+.logout-card {
+    background: $light-bg;
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: $shadow-soft;
+    text-align: center;
+    max-width: 420px;
+
+    h1 {
+        font-size: 2rem;
+        color: $primary;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        color: $text-medium;
+        margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 0.9rem 1.6rem;
+        background: $primary;
+        color: white;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.2s;
+
+        &:hover {
+            background: darken($primary, 8%);
+        }
+    }
+}

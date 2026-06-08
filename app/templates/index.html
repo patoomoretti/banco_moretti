@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Inicio - Banco Moretti{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-text">
+        <h1>Bienvenido al Banco Moretti</h1>
+        <p>Tu banco digital rápido, seguro y moderno.</p>
+        <a href="/registrar" class="btn-primary">Crear cuenta</a>
+    </div>
+
+    <img src="{{ url_for('static', filename='img/hero-banco.svg') }}" alt="Imagen Banco" class="hero-img">
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <i class="fas fa-shield-alt"></i>
+        <h3>Seguridad</h3>
+        <p>Protegemos tus datos con tecnología de última generación.</p>
+    </div>
+
+    <div class="feature-card">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>Todo desde tu celular</h3>
+        <p>Transferencias, pagos, depósitos y más, en segundos.</p>
+    </div>
+
+    <div class="feature-card">
+        <i class="fas fa-hand-holding-usd"></i>
+        <h3>Comisiones bajas</h3>
+        <p>Operá sin costos ocultos ni sorpresas.</p>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Pagar Tarjeta - Banco Moretti{% endblock %}
+
+{% block content %}
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Pagos y Servicios</h2>
+        <p class="content-page-subtitle">Liquidá el resumen de tus tarjetas de crédito</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-receipt form-card-icon"></i>
+                <h3 class="universal-form__title">Pagar Tarjeta</h3>
+            </div>
+
+            {% if mensaje %}
+                <div class="form-alert-pro">{{ mensaje }}</div>
+            {% endif %}
+
+            <form id="pagoForm" method="POST" class="form-layout-pro">
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Elegir tarjeta</label>
+                    <select class="input-pro-field select-pro" name="tarjeta" required>
+                        <option value="" disabled selected>Seleccioná una tarjeta</option>
+                        <option value="visa" {% if tarjeta == "visa" %}selected{% endif %}>Visa</option>
+                        <option value="master" {% if tarjeta == "mastercard" %}selected{% endif %}>MasterCard</option>
+                    </select>
+                </div>
+
+                <div class="form-field-group">
+                    <label class="form-field-label">Tipo de pago</label>
+                    <div class="radio-group-pro">
+                        <label class="radio-option">
+                            <input type="radio" name="tipo_pago" value="total" {% if tipo_pago == "total" %}checked{% endif %}>
+                            <span class="radio-label">Pago Total</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="tipo_pago" value="parcial" {% if tipo_pago == "parcial" %}checked{% endif %}>
+                            <span class="radio-label">Pago Parcial</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="pagoTotal" class="info-box-pro" style="display: none;">
+                    <div class="info-box-content">
+                        <span class="info-box-label">Monto total a cancelar</span>
+                        <span class="info-box-amount">${{ mensaje_deuda }}</span>
+                    </div>
+                </div>
+
+                <div id="pagoParcial" class="parcial-box-pro" style="display: none;">
+                    <div class="form-field-group">
+                        <label class="form-field-label">Monto a abonar</label>
+                        <div class="input-pro-wrapper">
+                            <span class="input-pro-symbol">$</span>
+                            <input type="number" name="monto" id="montoParcialInput" class="input-pro-field" placeholder="0.00" step="0.01">
+                        </div>
+                        <p class="form-field-help">Deuda actual: ${{ mensaje_deuda }}</p>
+                    </div>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Confirmar Pago</span>
+                        <i class="fa-solid fa-shield-check"></i>
+                    </button>
+                    <a href="/cliente/inicio" class="btn-link-back">Volver</a>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const radiosPago = document.querySelectorAll('input[name="tipo_pago"]');
+    const divTotal = document.getElementById("pagoTotal");
+    const divParcial = document.getElementById("pagoParcial");
+    const inputParcial = document.getElementById("montoParcialInput");
+
+    function actualizarVista() {
+        const seleccionado = document.querySelector('input[name="tipo_pago"]:checked');
+        if (!seleccionado) return;
+
+        if (seleccionado.value === "total") {
+            divTotal.style.display = "block";
+            divParcial.style.display = "none";
+            inputParcial.removeAttribute("required");
+        } else {
+            divTotal.style.display = "none";
+            divParcial.style.display = "block";
+            inputParcial.setAttribute("required", "true");
+        }
+    }
+
+    radiosPago.forEach(r => r.addEventListener("change", actualizarVista));
+    actualizarVista();
+});
+</script>
+{% endblock %}

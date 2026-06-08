@@ -1,0 +1,37 @@
+{% extends "empleado/empleado.html" %}
+
+{% block area_trabajo %}
+<div class="action-container">
+    <div class="action-header">
+        <h3><i class="fas fa-users"></i> Gestión de Clientes</h3>
+        <p>Listado completo de usuarios registrados en el sistema.</p>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Nombre Completo</th>
+                <th>Nro. Cuenta</th>
+                <!-- <th>Saldo</th> -->
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c in clientes %}
+            <tr>
+                <td>{{ c.dni }}</td>
+                <td>{{ c.nombre }} {{ c.apellido }}</td>
+                <td>#{{ c.numero }}</td>
+                <!-- <td class="text-success">${{ c.saldo }}</td> -->
+                <td>
+                    <a href="{{ url_for('empleado.perfil_cliente', dni=c.dni) }}" class="btn-edit">
+                        <i class="fas fa-user-edit"></i> Ver Perfil
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

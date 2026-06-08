@@ -1,0 +1,64 @@
+{% extends "empleado/empleado.html" %} 
+
+{% block area_trabajo %}
+<div class="action-container">
+    <div class="action-header">
+        <h3><i class="fas fa-user-minus"></i> Baja de Producto Bancario</h3>
+        <p>Ingrese el DNI para consultar los productos activos y proceder con la baja.</p>
+    </div>
+
+    <form class="admin-form" action="{{ url_for('empleado.baja_producto_view') }}" method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="dni">DNI del Cliente</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="dni" name="dni" placeholder="Ingrese DNI" value="{{ dni_buscado if dni_buscado else '' }}" required>
+                    <button type="submit" class="btn-save" style="width: auto; padding: 0 20px;">Ver Productos</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+
+    {% if cliente %}
+        <form class="admin-form" action="{{ url_for('empleado.confirmar_baja_view') }}" method="POST">
+            <input type="hidden" name="dni" value="{{ dni_buscado }}">
+            
+            <div class="form-group">
+                <label>Seleccione el producto a eliminar</label>
+                <select name="producto_baja" required>
+                    <option value="" disabled selected>-- Seleccione un producto --</option>
+                    
+                    {# Leemos directamente las claves del diccionario cliente #}
+                    {% if cliente.tarjeta_credito_visa %}
+                        <option value="tarjeta_credito_visa">Visa Crédito (Nro: {{ cliente.tarjeta_credito_visa.numero }})</option>
+                    {% endif %}
+                    
+                    {% if cliente.tarjeta_debito_visa %}
+                        <option value="tarjeta_debito_visa">Visa Débito (Nro: {{ cliente.tarjeta_debito_visa.numero }})</option>
+                    {% endif %}
+                    
+                    {% if cliente.tarjeta_credito_master %}
+                        <option value="tarjeta_credito_master">MasterCard Crédito (Nro: {{ cliente.tarjeta_credito_master.numero }})</option>
+                    {% endif %}
+                    
+                    {% if cliente.tarjeta_debito_master %}
+                        <option value="tarjeta_debito_master">MasterCard Débito (Nro: {{ cliente.tarjeta_debito_master.numero }})</option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn-cancel">Confirmar Baja</button>
+        </form>
+    {% elif dni_buscado %}
+        <p>No se encontró el cliente o no tiene productos.</p>
+    {% endif %}
+
+    {% if mensaje %}
+        <div class="alert-error">
+            <i class="fas fa-exclamation-circle"></i> {{ mensaje }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

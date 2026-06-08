@@ -1,0 +1,216 @@
+@use "../../base/variables" as *;
+
+/* --- LAYOUT GENERAL --- */
+.main-layout__content {
+    padding: 30px; /* Reducimos el padding general */
+    background-color: #f8fafc;
+}
+
+.content-page-header {
+    margin-bottom: 25px; /* Menos espacio abajo */
+}
+
+.content-page-title {
+    font-size: 1.5rem; /* Más pequeño y sobrio */
+    color: #004696;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.content-page-subtitle {
+    color: #64748b;
+    font-size: 0.9rem; /* Fuente más fina */
+}
+
+/* --- LA CARD ESTIRADA (Más compacta) --- */
+.universal-form__card-stretched {
+    background: #ffffff;
+    width: 100%;
+    border-radius: 16px; /* Bordes un poco menos exagerados */
+    padding: 35px 45px; /* Reducimos el aire interno */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
+}
+
+.form-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px; /* Reducimos margen */
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.form-card-icon {
+    font-size: 1.4rem; /* Icono más discreto */
+    color: #004696;
+}
+
+.universal-form__title {
+    font-size: 1.15rem; /* Título interno más pequeño */
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* --- EL FORMULARIO --- */
+.form-layout-pro {
+    max-width: 500px; /* Achicamos el ancho máximo del contenido */
+}
+
+.form-field-group {
+    margin-bottom: 20px; /* Menos separación entre campos */
+}
+
+.form-field-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem; /* Label más técnico */
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.input-pro-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-pro-symbol {
+    position: absolute;
+    left: 16px;
+    font-weight: 700;
+    color: #004696;
+    font-size: 1rem;
+}
+
+.input-pro-field {
+    width: 100%;
+    padding: 12px 16px 12px 35px; /* Padding más ajustado */
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem; /* Tamaño de fuente estándar */
+    background-color: #fcfcfd;
+    transition: all 0.2s ease;
+}
+
+.input-pro-field:focus {
+    outline: none;
+    border-color: #004696;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 70, 150, 0.06);
+}
+
+.form-field-help {
+    display: block;
+    margin-top: 6px;
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+/* --- BOTÓN --- */
+.btn-pro-submit {
+    background-color: #004696;
+    color: white;
+    padding: 12px 28px; /* Botón más estilizado y menos "pesado" */
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex; /* No ocupa todo el ancho por defecto */
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-pro-submit:hover {
+    background-color: #00336e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 70, 150, 0.15);
+}
+
+/* --- ALERTAS --- */
+.form-alert-pro {
+    background-color: #fef2f2;
+    color: #dc2626;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 0.85rem;
+    border-left: 3px solid #dc2626;
+}
+
+
+
+
+
+// MENU DESPLEGABLE
+.dropdown {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.dropdown__btn {
+    width: 100%;
+    padding: .9rem 1rem;
+    background: white;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover {
+        border-color: $primary;
+        background: rgba($primary, 0.06);
+    }
+}
+
+.dropdown__options {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    padding-left: .3rem;
+    transition: max-height .3s ease, opacity .25s ease;
+}
+
+.dropdown.open .dropdown__options {
+    max-height: 300px;     // cantidad amplia para que entren todas
+    opacity: 1;
+    padding: .5rem .3rem;
+}
+
+.dropdown__option {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    font-size: 1rem;
+    cursor: pointer;
+
+    input[type="radio"] {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+}
+
+
+
+/* SOLICITAR PRESTAMO Estilo extra para resaltar el resultado */
+.highlight-simulacion {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px dashed #cbd5e1;
+}
+.input-readonly {
+    background-color: #e2e8f0 !important;
+    font-weight: 700;
+    color: #004696 !important;
+}

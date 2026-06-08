@@ -1,0 +1,240 @@
+/* Estructura Principal */
+.empleado-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+
+
+/* MENÚ LATERAL (Sidebar) */
+/* --- CONTENEDOR PRINCIPAL --- */
+.sidebar-menu {
+    width: 280px;
+    background-color: #2c3e50; /* Tu azul oscuro original */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+/* --- LOGO / BRAND --- */
+.sidebar-brand {
+    padding: 30px 20px;
+    text-align: center;
+    background-color: #1a252f; /* Tu fondo más oscuro original */
+}
+
+.sidebar-brand h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.sidebar-brand span {
+    color: #3498db; /* Tu color de acento original */
+    font-weight: 300;
+}
+
+/* --- LISTADO DE NAVEGACIÓN --- */
+.nav-list {
+    padding: 20px 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* --- GRUPOS (NUEVO) --- */
+.nav-group {
+    margin-bottom: 25px;
+}
+
+.group-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #95a5a6; /* Gris azulado suave */
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/* --- ITEMS DEL MENÚ --- */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: #ecf0f1;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+}
+
+.nav-item i {
+    width: 20px;
+    font-size: 1.1rem;
+    color: #3498db; /* Iconos con tu color de acento */
+    text-align: center;
+}
+
+/* --- HOVER Y ESTADO ACTIVO --- */
+.nav-item:hover {
+    background-color: #34495e;
+    color: white;
+}
+
+.nav-item.active {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+.nav-item.active i {
+    color: white; /* Icono blanco cuando está activo */
+}
+
+/* --- FOOTER / SALIR --- */
+.sidebar-footer {
+    padding: 20px 15px;
+    border-top: 1px solid #34495e;
+}
+
+.logout {
+    color: #e74c3c; /* Rojo suave para salir */
+}
+
+.logout i {
+    color: #e74c3c;
+}
+
+.logout:hover {
+    background-color: #c0392b;
+    color: white;
+}
+
+.logout:hover i {
+    color: white;
+}
+
+
+
+
+
+
+
+/* Navegación */
+.nav-list {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.nav-group {
+    margin-bottom: 25px;
+    padding: 0 15px;
+}
+
+.group-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #95a5a6;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.nav-item {
+    display: block;
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.nav-item:hover {
+    background-color: #34495e;
+    color: #3498db;
+    padding-left: 20px;
+}
+
+/* Pie del Menú */
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #34495e;
+}
+
+.btn-logout {
+    display: block;
+    text-align: center;
+    background-color: #e74c3c;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
+}
+
+
+
+
+
+
+
+
+
+/* ÁREA DE TRABAJO (Derecha) */
+.work-area {
+    margin-left: 280px; /* Ancho del sidebar */
+    flex: 1;
+    padding: 40px;
+}
+
+.work-header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.work-header h1 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.8rem;
+}
+
+.alert-info {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 5px solid #0c5460;
+    border-radius: 4px;
+}
+
+.work-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    min-height: 400px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: #7f8c8d;
+}

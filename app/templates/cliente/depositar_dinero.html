@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="main-layout__content">
+    
+    <header class="content-page-header">
+        <h2 class="content-page-title">Operaciones de Cuenta</h2>
+        <p class="content-page-subtitle">Gestioná tus fondos de manera segura y rápida</p>
+    </header>
+
+    <section class="universal-form-full">
+        <div class="universal-form__card-stretched">
+            
+            <div class="form-card-header">
+                <i class="fa-solid fa-money-bill-transfer form-card-icon"></i>
+                <h3 class="universal-form__title">Depositar dinero</h3>
+            </div>
+
+            {% if mensaje %}
+                <div class="form-alert-pro">{{ mensaje }}</div>
+            {% endif %}
+
+            <form method="POST" class="form-layout-pro">
+                
+                <div class="form-field-group">
+                    <label class="form-field-label">Monto a ingresar</label>
+                    <div class="input-pro-wrapper">
+                        <span class="input-pro-symbol">$</span>
+                        <input type="number" name="saldo" step="0.01" class="input-pro-field" placeholder="0.00" required>
+                    </div>
+                    <small class="form-field-help">El saldo se acreditará inmediatamente en tu cuenta.</small>
+                </div>
+
+                <div class="form-actions-pro">
+                    <button type="submit" class="btn-pro-submit">
+                        <span>Confirmar Depósito</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+

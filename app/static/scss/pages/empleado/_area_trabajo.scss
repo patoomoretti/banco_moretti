@@ -1,0 +1,253 @@
+/* ==========================================
+   ESTILOS GENERALES DEL CONTENEDOR
+   ========================================== */
+/* Mantenemos el estilo de tu contenedor principal */
+.action-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+/* Header alineado a tu diseño anterior */
+.action-header h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+    display: inline-block;
+}
+
+
+
+
+/* ==========================================
+   FORMULARIOS (Agregar, Buscar, Editar)
+   ========================================== */
+/* Grilla para que los campos no ocupen todo el ancho y se vean ordenados */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+/* Estilo de los inputs igual al de "Agregar Cliente" */
+.form-group input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+/* Estilo específico para el DNI que es solo lectura */
+.form-group input[readonly] {
+    background-color: #f9f9f9;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Botonera inferior */
+.form-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+}
+
+
+
+
+
+
+/* ==========================================
+   ELIMINAR CLIENTE
+   ========================================== */
+
+
+/* Cabecera con tono de advertencia */
+.danger-header h3 {
+    color: #e74c3c; /* Rojo de peligro */
+}
+
+/* Input destacado para el DNI */
+.input-warning-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-warning-wrapper i {
+    position: absolute;
+    left: 15px;
+    color: #e74c3c;
+}
+
+.input-warning-wrapper input {
+    padding-left: 45px !important;
+    border: 1px solid #fab1a0 !important;
+}
+
+.help-text-danger {
+    color: #d63031;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Botón de eliminación */
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+.delete-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Para que el DNI ocupe más espacio */
+.full-width {
+    grid-column: span 2;
+}
+
+
+
+/* ==========================================
+   TABLAS Y BOTONES
+   ========================================== */
+.btn-save {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+// BUSCAR CLIENTE
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-search {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.client-profile-card {
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.detail-item label {
+    display: block;
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.detail-item p {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.balance-text {
+    color: #27ae60 !important;
+    font-weight: bold;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}

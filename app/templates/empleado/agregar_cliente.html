@@ -1,0 +1,66 @@
+{% extends "empleado/empleado.html" %} 
+
+{% block area_trabajo %}
+    <div class="action-container">
+    <div class="action-header">
+        <h3><i class="fas fa-user-plus"></i> Registrar Nuevo Cliente</h3>
+        <p>Complete los datos personales para dar de alta en el sistema.</p>
+    </div>
+
+    <form class="admin-form" action="{{ url_for('empleado.agregar_nuevo_cliente') }}" method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" placeholder="Ej: Perez" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dni">Número de DNI</label>
+                <input type="number" id="dni" name="dni" placeholder="Sin puntos ni espacios" required>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Direccion</label>
+                <input type="text" id="direccion" name="direccion" placeholder="Av. Libertador 4500" required>
+            </div>
+
+            <div class="form-group">
+                <label for="piso">Piso</label>
+                <input type="text" id="piso" name="piso" placeholder="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="departamento">Departamento</label>
+                <input type="text" id="departamento" name="departamento" placeholder="A" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Telefono</label>
+                <input type="number" id="telefono" maxlength="10" name="telefono" placeholder="1155550000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="tuemail@ejemplo.com" required>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Guardar Cliente</button>
+            <button type="reset" class="btn-cancel">Limpiar Campos</button>
+        </div>
+
+        {% if mensaje %}
+            <div class="alert-error">
+                <i class="fas fa-exclamation-circle"></i> {{ mensaje }}
+            </div>
+        {% endif %}
+
+    </form>
+</div>
+{% endblock %}

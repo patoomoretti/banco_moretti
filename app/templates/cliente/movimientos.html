@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <div class="dashboard__layout">
+
+        <!-- CONTENIDO DE MOVIMIENTOS -->
+        <div class="dashboard__content">
+
+            <h2 class="dashboard__welcome">Movimientos</h2>
+            <p class="dashboard__subtitle">Acá vas a ver todos tus movimientos</p>
+
+            <div class="movimientos-lista">
+                {% for m in movimientos %}
+                    <div class="mov-item">
+                        <span class="mov-fecha">{{ m.fecha }}</span>
+                        <div class="mov-info">
+                            <span class="mov-tipo">{{ m.tipo }}</span>
+                            <span class="mov-detalle">{{ m.detalle }}</span>
+                        </div>
+                        <span class="mov-monto {{ 'positivo' if m.monto > 0 else 'negativo' }}">
+                            ${{ m.monto }}
+                        </span>
+                    </div>
+                {% else %}
+                    <div class="sin-movimientos">No se encontraron movimientos registrados.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
