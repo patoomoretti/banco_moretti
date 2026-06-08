@@ -1,0 +1,35 @@
+[
+    {
+        "numero": "028106",
+        "dni": 1,
+        "tipo_cuenta": "Ahorro",
+        "saldo": 2500,
+        "tarjeta_credito": {
+            "numero": "5202 - 6033 - 1630 - 1889",
+            "fecha_vencimiento": [
+                "06 - 32"
+            ],
+            "cvv": [
+                "659"
+            ],
+            "consumos": 102000.0
+        },
+        "tarjeta_debito": false
+    },
+    {
+        "numero": "294354",
+        "dni": 2,
+        "tipo_cuenta": "Ahorro",
+        "saldo": 2500,
+        "tarjeta_credito": false,
+        "tarjeta_debito": false
+    },
+    {
+        "numero": "025891",
+        "dni": 3,
+        "tipo_cuenta": "Ahorro",
+        "saldo": 0,
+        "tarjeta_credito": false,
+        "tarjeta_debito": false
+    }
+]
