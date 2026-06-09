@@ -43,19 +43,6 @@ def inicio():
 def sobre_nosotros():
     return render_template("sobre_nosotros.html")
 
-@app.route("/test_db")
-def test_basdatos():
-    clientes = Cliente.query.all()
-    cuentas = Cuenta.query.all()
-    tarjetas = Tarjeta.query.all()
-    empleados = Usuario.query.all()
-    return str({
-        # "clientes": [f"{c.nombre} {c.apellido} - DNI: {c.dni}" for c in clientes],
-        # "cuentas": [f"Cuenta {c.numero} - DNI: {c.dni}" for c in cuentas],
-        # "tarjetas": [f"{t.marca} {t.tipo} - DNI: {t.dni}" for t in tarjetas],
-        "empleados": [f"{e.dni} - ROLE: {e.role}" for e in empleados]
-    })
-
 
 if __name__ == "__main__":
     app.run(debug=True)
