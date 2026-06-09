@@ -7,39 +7,6 @@ import json
 from database import db
 
 
-# CHEQUEAR TODO LO QUE ES REGISTRAR/LOGIN
-
-def leer_json(ruta):
-    try:
-        with open(ruta, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
-
-
-def guardar_json(ruta, datos):
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(datos, f, indent=4, ensure_ascii=False)
-
-
-def buscar_dni(dni, ruta):
-    '''
-    Busca el dni y si no lo encuentra retorna None
-    '''
-    leer_cuenta = leer_json(ruta)
-    cliente_encontrado = None
-    for i, c in enumerate(leer_cuenta):
-        if int(c["dni"]) == int(dni):
-            cliente_encontrado = c
-            indice = i
-            break
-
-    if not cliente_encontrado:
-        return None, None
-
-    return cliente_encontrado, indice
-
-
 def registrar_cuenta(dni, pin):
     '''
     El cliente se puede registrar si es que no tiene una cuenta
@@ -146,9 +113,6 @@ def ver_datos_tarjeta_visa(dni, ruta, ruta_nombre):
     dinero_disponible = limite_disponible - consumos_total
 
     return dinero, cliente, limite_disponible, consumos_total, dinero_disponible
-
-
-
 
 
 
