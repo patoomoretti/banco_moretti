@@ -8,7 +8,7 @@ class Cliente(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     apellido = db.Column(db.String(100), nullable=False)
     direccion = db.Column(db.String(200), nullable=False)
-    piso = db.Column(db.String(10), nullable=True)
+    piso = db.Column(db.Integer, nullable=True)
     departamento = db.Column(db.String(10), nullable=True)
     telefono = db.Column(db.BigInteger, nullable=False)
     email = db.Column(db.String(150), nullable=False)

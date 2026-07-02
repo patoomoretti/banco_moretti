@@ -9,7 +9,7 @@ class Tarjeta(db.Model):
     marca = db.Column(db.String(20), nullable=False)  # visa / master
     tipo = db.Column(db.String(20), nullable=False)   # credito / debito
     fecha_vencimiento = db.Column(db.String(10), nullable=False)
-    cvv = db.Column(db.String(3), nullable=False)
+    cvv = db.Column(db.Integer, nullable=False)
     consumos = db.Column(db.Float, nullable=False, default=0.0)
     limite = db.Column(db.Float, nullable=False, default=5000000)
 

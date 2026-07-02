@@ -4,7 +4,7 @@ class Cuenta(db.Model):
     __tablename__ = "cuentas"
 
     id = db.Column(db.Integer, primary_key=True)
-    numero = db.Column(db.String(20), unique=True, nullable=False)
+    numero = db.Column(db.Integer, unique=True, nullable=False)
     dni = db.Column(db.Integer, db.ForeignKey("clientes.dni"), nullable=False)
     tipo_cuenta = db.Column(db.String(50), nullable=False)
     saldo = db.Column(db.Float, nullable=False, default=0.0)
