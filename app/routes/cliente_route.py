@@ -1,16 +1,18 @@
 from flask import Blueprint, render_template, request, redirect, session,flash
 from services.cliente_service import *
 from models.cliente import Cliente
+from models.cuenta import Cuenta
+from models.tarjetas import Tarjeta
 from utils.helpers import formatear
+from utils.decorators import login_required,cliente_required
 
 cliente_bp = Blueprint("cliente", __name__)
 
 
 @cliente_bp.route("/cliente/inicio", methods=["GET"])
+@cliente_required 
 def cliente_inicio():
     dni = session.get("dni")
-    if not dni:
-        return redirect("/login")
     
     cliente = Cliente.query.filter_by(dni=dni).first() 
     cuenta = Cuenta.query.filter_by(dni=dni).first() 
@@ -19,16 +21,21 @@ def cliente_inicio():
     tarjeta_m_c = Tarjeta.query.filter_by(dni=dni, marca="master", tipo="credito").first()
     tarjeta_m_d = Tarjeta.query.filter_by(dni=dni, marca="master", tipo="debito").first()
     
+    if not cliente or not cuenta:
+        return redirect("/login")
     nombre_cliente = cliente.nombre
     
     saldo_formateado_pesos = formatear(cuenta.saldo)
     saldo_formateado_dolar= formatear(cuenta.saldo_dolar or 0)
     
-    visa_credito_disponible = visa_credito_limite = "0,00"
-    visa_debito_disponible = visa_debito_limite = "0,00"
-    master_credito_disponible = master_credito_limite = "0,00"
-    master_debito_disponible = master_debito_limite = "0,00"
-    
+    visa_credito_disponible = "0,00"
+    visa_credito_limite = "0,00"
+    visa_debito_disponible = "0,00"
+    visa_debito_limite = "0,00"
+    master_credito_disponible = "0,00"
+    master_credito_limite = "0,00"
+    master_debito_disponible = "0,00"
+    master_debito_limite = "0,00"
     
     if tarjeta_v_c:
         disponible_credito_visa = tarjeta_v_c.limite - tarjeta_v_c.consumos
@@ -58,17 +65,18 @@ def cliente_inicio():
 
 
 @cliente_bp.route("/cliente/depositar_dinero", methods=["GET", "POST"])
+@cliente_required
 def depositar():
     dni = session.get("dni")
-    
     if request.method == "POST":
-        saldo = int(request.form["saldo"])
+        saldo = int(request.form["saldo",0])
         return depositar_dinero(dni, saldo)
 
     return render_template("cliente/depositar_dinero.html", mensaje=None)
 
 
 @cliente_bp.route("/cliente/retirar_dinero", methods=["GET","POST"])
+@cliente_required
 def retirar():
     dni = session.get("dni")
     if request.method == "POST":
@@ -79,10 +87,11 @@ def retirar():
 
 
 @cliente_bp.route("/cliente/transferir_dinero", methods=["GET", "POST"])
+@cliente_required
 def transferir_view():
-    dni = int(session.get("dni"))
+    dni = session.get("dni")
     if request.method == "POST":
-        dni_destino = int(request.form.get("dni_destino"))
+        dni_destino = request.form.get("dni_destino")
         monto = int(request.form.get("monto"))
         return transferir_dinero(dni, dni_destino, monto)
 
@@ -91,12 +100,13 @@ def transferir_view():
 
 # hacer este
 @cliente_bp.route("/cliente/solicitar_prestamo",methods=["GET","POST"])
+@cliente_required
 def solicitar_prestamo_view():
     dni = session.get("dni")
     
     if request.method == "POST":
         monto = int(request.form.get("monto"))
-        destino = str(request.form.get("destino"))
+        destino = request.form.get("destino")
         plazo = request.form.get("plazo")
         return solicitar_prestamo(dni,monto,destino,plazo)
      
@@ -104,6 +114,7 @@ def solicitar_prestamo_view():
 
 
 @cliente_bp.route("/cliente/pagar_tarjeta", methods=["GET", "POST"])
+@cliente_required
 def pagar():
     dni = session.get("dni")
 
@@ -113,8 +124,8 @@ def pagar():
         monto = request.form.get("monto")
         return pagar_tarjeta(tarjeta, monto, dni, tipo_pago)
 
-    visa = Tarjeta.query.filter_by(dni=dni, marca="visa").first()
-    master = Tarjeta.query.filter_by(dni=dni, marca="master").first()
+    visa = Tarjeta.query.filter_by(dni=dni, marca="visa", tipo="credito").first()
+    master = Tarjeta.query.filter_by(dni=dni, marca="master", tipo="credito").first()
 
     deuda_visa = 0
     deuda_master = 0
@@ -129,16 +140,15 @@ def pagar():
 
 
 @cliente_bp.route("/cliente/consumo_tarjeta", methods=["GET","POST"])
+@cliente_required
 def agregar_consumo():
     dni = session.get("dni")
-    cuenta = Tarjeta.query.filter_by(dni=dni).filter_by()
+    cuenta = Tarjeta.query.filter_by(dni=dni).first()
     
-    visa_c = cuenta.get("tarjeta_credito_visa")
-    visa_d = cuenta.get("tarjeta_debito_visa")
-    master_c = cuenta.get("tarjeta_credito_master")
-    master_d = cuenta.get("tarjeta_debito_master")
-    
-    
+    visa_c = Tarjeta.query.filter_by(dni=dni,marca="visa",tipo="credito").first()
+    visa_d = Tarjeta.query.filter_by(dni=dni,marca="visa",tipo="debito").first()
+    master_c = Tarjeta.query.filter_by(dni=dni,marca="master",tipo="credito").first()
+    master_d = Tarjeta.query.filter_by(dni=dni,marca="master",tipo="debito").first()
     if request.method == "POST":
         producto = request.form.get("producto")
         importe = float(request.form.get("importe"))
@@ -149,8 +159,9 @@ def agregar_consumo():
     return render_template("cliente/agregar_consumo.html", visa_c=visa_c,visa_d=visa_d,master_c=master_c,master_d=master_d)
 
 
-# QUEDA CHEQUEAR
+# Cambiar a base de datos
 @cliente_bp.route("/cliente/resumen_tarjeta", methods=["GET", "POST"])
+@cliente_required
 def resumen_tarjeta():
     ruta_consumos = "banco_moretti/data/consumos_tarjeta_credito.json"
     ruta_cuenta = "banco_moretti/data/cuentas_bancarias.json"
@@ -174,45 +185,18 @@ def resumen_tarjeta():
     
 
 @cliente_bp.route("/cliente/transferencias")
+@cliente_required
 def ver_transferencias():
-    ruta = "banco_moretti/data/transferencias.json"
-    dni_sesion = session.get('dni')
+    dni = session.get("dni")
+    transferencias = obtener_transferencias_cliente(dni)
 
-    todos_los_datos = leer_json(ruta)
-    transferencias_finales = []
-
-    for usuario in todos_los_datos:
-        if usuario["dni"] == dni_sesion:
-            for t in usuario.get("transferencia", []):
-                t["es_recepcion"] = False
-                transferencias_finales.append(t)
-        else:
-            for t in usuario.get("transferencia", []):
-                if t["dni_destino"] == dni_sesion:
-                    t_recibida = t.copy()
-                    t_recibida["es_recepcion"] = True
-                    t_recibida["dni_origen"] = usuario["dni"]
-                    transferencias_finales.append(t_recibida)
-
-    transferencias_finales.sort(key=lambda x: datetime.strptime(x['fecha'], "%d-%m-%y  %H:%M"), reverse=True)
-
-    return render_template("cliente/transferencias.html", transferencias=transferencias_finales)
+    return render_template("cliente/transferencias.html",transferencias=transferencias)
     
     
-@cliente_bp.route("/cliente/movimientos", methods=["GET", "POST"])
+@cliente_bp.route("/cliente/movimientos", methods=["GET"])
+@cliente_required
 def movimientos_completos():
-    ruta = "banco_moretti/data/movimientos.json"
-    dni = session.get('dni')
-    datos_cliente, indice = buscar_dni(dni, ruta)
-    todos_los_movimientos = []
-    
-    # 2. Definimos las llaves que contienen listas de movimientos
-    categorias = ["transferencia", "pago_tarjeta_visa", "pago_tarjeta_master", "deposito", "extraccion"]
+    dni = session.get("dni")
+    movimientos = obtener_movimientos_cliente(dni)
 
-    for cat in categorias:
-        if cat in datos_cliente:
-            todos_los_movimientos.extend(datos_cliente[cat])
-
-    todos_los_movimientos.sort(key=lambda x: datetime.strptime(x['fecha'], "%d-%m-%y  %H:%M"), reverse=True)
-    
-    return render_template("cliente/movimientos.html", movimientos=todos_los_movimientos)
+    return render_template("cliente/movimientos.html",movimientos=movimientos)

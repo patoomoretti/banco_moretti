@@ -308,70 +308,49 @@ def pagar_tarjeta(marca, monto, dni, tipo_pago):
         return render_template("cliente/pagar_tarjeta.html", mensaje=f"❌ Error inesperado: {str(e)}")
 
 
+def obtener_transferencias_cliente(dni):
+    transferencias_finales = []
+    enviadas = Transferencia.query.filter_by(dni_origen=dni).all()
 
-# Me queda de aca para abajo
-def obtener_periodos_disponibles():
-    hoy = datetime.now()
-    periodos = []
-
-    for i in range(1, 12):
-        mes = hoy.month - i
-        anio = hoy.year
-
-        while mes <= 0:
-            mes += 12
-            anio -= 1
-
-        periodos.append(f"{anio}-{mes:02d}")
-
-    return periodos
-
-
-# QUEDA CHEQUEAR AL IGUAL QUE EL DE GUARDAR Y LA RUTA
-def generar_resumen(dni, ruta_consumos, tarjeta_seleccionada, periodo_seleccionado):
-    """
-    Genera el resumen de una tarjeta para un periodo cerrado.
-    Rechaza periodos futuros o del mes actual.
-    """
-    hoy = datetime.now()
-    mes_actual = hoy.strftime("%Y-%m")
-    
-    if periodo_seleccionado >= mes_actual:
-        return {
-            "items": [],
-            "total_mes": 0,
-            "periodo": periodo_seleccionado,
-            "tarjeta": tarjeta_seleccionada,
-            "error": "El periodo seleccionado aún no está cerrado."
+    for t in enviadas:
+        transferencia = {
+            "dni_destino": t.dni_destino,
+            "monto": t.monto,
+            "fecha": t.fecha,
+            "es_recepcion": False
         }
 
-    cuenta, indice = buscar_dni(dni, ruta_consumos)
+        transferencias_finales.append(transferencia)
 
-    if not cuenta:
-        return {"items": [], "total_mes": 0, "periodo": periodo_seleccionado, "tarjeta": tarjeta_seleccionada}
+    recibidas = Transferencia.query.filter_by(dni_destino=dni).all()
 
-    nombre_tarjeta = f"tarjeta_{tarjeta_seleccionada}"
-    todos_los_consumos = cuenta.get(nombre_tarjeta, [])
+    for t in recibidas:
+        transferencia = {
+            "dni_origen": t.dni_origen,
+            "monto": t.monto,
+            "fecha": t.fecha,
+            "es_recepcion": True
+        }
+        transferencias_finales.append(transferencia)
 
-    consumos_del_mes = []
-    suma_total = 0.0
+    transferencias_finales.sort(key=lambda x: x["fecha"],reverse=True)
 
-    for gasto in todos_los_consumos:
-        if gasto["periodo"] == periodo_seleccionado:
-            consumos_del_mes.append({
-                "producto": gasto["producto"],
-                "importe_cuota": gasto["importe_cuota"],
-                "cuota_actual": gasto["cuota_actual"],
-                "cuotas_totales": gasto["cuotas_totales"],
-                "fecha": gasto["fecha"]
-            })
-            suma_total += gasto["importe_cuota"]
+    return transferencias_finales
 
-    return {
-        "items": consumos_del_mes,
-        "total_mes": round(suma_total, 2),
-        "periodo": periodo_seleccionado,
-        "tarjeta": tarjeta_seleccionada
-    }
-    
+
+def obtener_movimientos_cliente(dni):
+    movimientos = Movimiento.query.filter_by(dni=dni).all()
+    movimientos_lista = []
+
+    for m in movimientos:
+        movimiento = {
+            "tipo": m.tipo,
+            "detalle": m.detalle,
+            "fecha": m.fecha,
+            "monto": m.monto
+        }
+        movimientos_lista.append(movimiento)
+
+    movimientos_lista.sort(key=lambda x: x["fecha"],reverse=True)
+    return movimientos_lista
     
