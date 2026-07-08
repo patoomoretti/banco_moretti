@@ -70,81 +70,36 @@ def loguear_cuenta_admin(dni, pin):
     if not admin:
         return render_template("auth/login_admin.html", mensaje="⚠️ El DNI no se encuentra registrado.")
 
-    # nombre_empleado = nombre_admin.nombre
+    nombre_empleado = nombre_admin.nombre
 
     if admin.pin == pin:
         session['role'] = 'empleado'
-        # session['nombre'] = nombre_empleado
+        session['nombre'] = nombre_empleado
         session['admin_dni'] = dni
         return render_template("empleado/empleado.html")
     else:
         return render_template("auth/login_admin.html", mensaje="❌ DNI o PIN incorrectos.")
 
 
-
-# Esto estoy haciendo ahora
 def restablecer_pin(dni, pin, pin_reingresar):
     '''
     Si se olvido el PIN, puede restablecerlo. Ingresa el dni de la cuenta que desea cambiar
     '''
-    cliente = Usuario.query.filter_by(dni=dni).first()
+    try:
+        cliente = Usuario.query.filter_by(dni=dni).first()
+        if not cliente:
+            return render_template("auth/restablecer.html", mensaje="⚠️ El usuario no existe.")
+        
+        if pin != pin_reingresar:
+            return render_template("auth/restablecer.html", mensaje="❌ Los PIN no coinciden.")
+        
+        cliente.pin = pin_reingresar
+        db.session.commit()
+        return render_template("auth/restablecer.html", mensaje="✅ El PIN ha sido cambiado correctamente.")
+    except Exception:
+        db.session.rollback()
+        return render_template("auth/restablecer.html", mensaje="❌ No ha sido posible cambiar el pin.")
 
-    if not cliente:
-        return render_template("auth/restablecer.html", mensaje="⚠️ El usuario no existe.")
-    
-    if pin != pin_reingresar:
-        return render_template("auth/restablecer.html", mensaje="❌ Los PIN no coinciden.")
-    
-    cliente.pin = pin_reingresar
-    db.session.commit()
-    return render_template("auth/restablecer.html", mensaje="✅ El PIN ha sido cambiado correctamente.")
-
-
-
-# A CHEQUEAR ESTO
-def ver_datos_tarjeta_visa(dni, ruta, ruta_nombre):
-    leer_cuenta = leer_json(ruta)
-    leer_nombre = buscar_dni(dni, ruta_nombre)
-
-    dinero = leer_cuenta["saldo"]
-    cliente = leer_nombre["nombre"]
-    limite_disponible = leer_cuenta["tarjeta_credito_visa"]["limite"]
-    consumos_total = leer_cuenta["tarjeta_credito"]["consumos"]
-    dinero_disponible = limite_disponible - consumos_total
-
-    return dinero, cliente, limite_disponible, consumos_total, dinero_disponible
-
-
-
-def agregar_movimientos(dni, tipo, detalle, fecha, monto, nombre_lista):
-    leer_movimientos = leer_json("banco_moretti/data/movimientos.json")
-    nuevo_movimiento = Movimiento(tipo, detalle, fecha, monto)
-
-    agregar_movimiento = {
-        "tipo": nuevo_movimiento.tipo,
-        "detalle": nuevo_movimiento.detalle,
-        "fecha": nuevo_movimiento.fecha,
-        "monto": nuevo_movimiento.monto
-    }
-
-    encontrado = False
-    for cliente in leer_movimientos:
-        if int(cliente["dni"]) == int(dni):
-            if nombre_lista not in cliente:
-                cliente[nombre_lista] = []
-
-            cliente[nombre_lista].append(agregar_movimiento)
-            encontrado = True
-            break
-
-    if not encontrado:
-        leer_movimientos.append({
-            "dni": int(dni),
-            nombre_lista: [agregar_movimiento]
-        })
-
-    guardar_json("banco_moretti/data/movimientos.json", leer_movimientos)
-    
 
 def formatear(valor):
     try:
@@ -153,24 +108,3 @@ def formatear(valor):
         return "0,00"
         
         
-def guardar_edicion_perfil(dni_original, datos_actualizados, ruta):
-    leer_clientes = leer_json(ruta)
-    
-    encontrado = False
-    for cliente in leer_clientes:
-        if int(cliente['dni']) == dni_original:
-            cliente['nombre'] = datos_actualizados['nombre']
-            cliente['apellido'] = datos_actualizados['apellido']
-            cliente['direccion'] = datos_actualizados['direccion']
-            cliente['piso'] = datos_actualizados['piso']
-            cliente['departamento'] = datos_actualizados['departamento']
-            cliente['telefono'] = datos_actualizados['telefono']
-            cliente['email'] = datos_actualizados['email']
-            encontrado = True
-            break
-
-    if encontrado:
-        guardar_json(ruta, leer_clientes)
-        return True
-
-    return False  
