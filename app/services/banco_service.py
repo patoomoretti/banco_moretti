@@ -8,6 +8,28 @@ from datetime import datetime
 import random
 from database import db
 
+def obtener_dashboard():
+    clientes = Cliente.query.all()
+    movimientos = Movimiento.query.all()
+    
+    total_clientes = len(clientes)
+    hoy = datetime.now().strftime("%d-%m-%y")
+    total_depositos_hoy = 0
+    cant_transferencias_24h = 0 
+    
+    for movimiento in movimientos:
+        fecha_movimiento = movimiento.fecha.split()[0]
+        if fecha_movimiento == hoy:
+            if movimiento.tipo == "deposito":
+                total_depositos_hoy += movimiento.monto
+            elif movimiento.tipo == "transferencia":
+                cant_transferencias_24h += 1
+
+    # ultimos 3 clientes
+    ultimos_clientes = Cliente.query.order_by(Cliente.id.desc()).limit(3).all()
+
+    return render_template("empleado/dashboard.html",total_clientes=total_clientes,total_depositos_hoy=total_depositos_hoy,cant_transferencias_24h=cant_transferencias_24h,ultimos_clientes=ultimos_clientes,hoy=hoy)
+
 
 def alta_cliente(nombre, apellido, dni, direccion, piso, departamento, telefono, email):
     try:
@@ -47,12 +69,49 @@ def baja_cliente(dni):
         db.session.delete(cliente)
         db.session.commit()
         return render_template("empleado/eliminar_cliente.html", mensaje="✅ Cliente eliminado correctamente")
-    
     except Exception as e:
         db.session.rollback()
         return render_template("empleado/eliminar_cliente.html", mensaje=f"❌ Error inesperado: {str(e)}")
         
+        
+def obtener_clientes():
+    
+    todos_los_clientes = Cliente.query.all()
+    cuentas_clientes = Cuenta.query.all()
+    
+    for cliente in todos_los_clientes:
+        cliente.numero = "Sin cuenta"
+        for cuenta in cuentas_clientes:
+            if cliente.dni == cuenta.dni:
+                cliente.numero = cuenta.numero
+                break
+    
+    return todos_los_clientes
 
+
+def obtener_perfil_cliente(dni):
+    
+    cliente = Cuenta.query.filter_by(dni=dni).first()
+    movimientos = Movimiento.query.filter_by(dni=dni).all() # Devuelve todos los movimientos
+    
+    return {"cliente": cliente,"movimientos": movimientos}
+
+
+def modificar_datos_cliente(dni,direccion,piso,departamento,telefono,email):
+    cliente = Cliente.query.filter_by(dni=dni).first()
+
+    if cliente is None:
+        return None
+    
+    cliente.direccion = direccion
+    cliente.piso = piso
+    cliente.departamento = departamento
+    cliente.telefono = telefono
+    cliente.email = email
+    
+    db.session.commit()
+    return cliente
+                
 
 def buscar_cliente(dni):
     ''''
@@ -141,7 +200,7 @@ def alta_producto(dni, marca, tipo_producto):
         return render_template("empleado/alta_producto.html", mensaje=f"❌ Error inesperado: {str(e)}")
         
 
-
+# chequear la baja porque tengo que ser mas especifico en visa credito o visa debito
 def baja_producto(dni,tipo_producto):
     '''
     Buscamos el DNI y le damos de baja un producto seleccionado
@@ -159,13 +218,12 @@ def baja_producto(dni,tipo_producto):
         db.session.delete(tarjeta)
         db.session.commit()
         return render_template("empleado/baja_producto.html", mensaje="✅ Producto eliminado exitosamente")
-    
     except Exception as e:
         db.session.rollback()
         return render_template("empleado/baja_producto.html", mensaje=f"❌ Error inesperado: {str(e)}")
 
 
-def solicitar_prestamo(dni, monto, cuotas, tasa_interes, destino, fecha_solicitud):
+def solicitar_prestamo(dni, monto, cuotas, tasa_interes, destino):
     try:
         cliente = Cliente.query.filter_by(dni=dni).first()
         if not cliente:
@@ -174,6 +232,7 @@ def solicitar_prestamo(dni, monto, cuotas, tasa_interes, destino, fecha_solicitu
         interes_total = monto * (tasa_interes / 100)
         total = monto + interes_total
         monto_cuota = total / cuotas
+        fecha_solicitud = datetime.now().strftime("%d-%m-%y")
         
         nuevo_prestamo = Prestamo(
             dni=dni,
