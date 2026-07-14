@@ -13,7 +13,7 @@ class Tarjeta(db.Model):
     consumos = db.Column(db.Float, nullable=False, default=0.0)
     limite = db.Column(db.Float, nullable=False, default=5000000)
 
-    cliente = db.relationship("Cliente", backref="tarjetas")
+    cliente = db.relationship("Cliente",backref=db.backref("tarjetas", cascade="all, delete-orphan"))
 
     def __str__(self):
         return f"Tarjeta {self.marca} {self.tipo} N° {self.numero}"

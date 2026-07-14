@@ -10,7 +10,7 @@ class Cuenta(db.Model):
     saldo = db.Column(db.Float, nullable=False, default=0.0)
     saldo_dolar = db.Column(db.Float, nullable=True, default=0.0)
 
-    cliente = db.relationship("Cliente", backref="cuentas")
+    cliente = db.relationship("Cliente",backref=db.backref("cuentas", cascade="all, delete-orphan"))
 
     def __str__(self):
         return f"Cuenta N°{self.numero} | Tipo: {self.tipo_cuenta} | Saldo: {self.saldo}"
