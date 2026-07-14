@@ -8,125 +8,130 @@
         <p class="content-header__subtitle">Esta es tu banca personal</p>
     </header>
 
-    <section class="stats-grid">
-        <div class="stat-card stat-card--highlight">
-            <span class="stat-card__label">Caja de Ahorro</span>
-            <div class="stat-card__value">${{ saldo_disponible }}</div>
-        </div>
-        {% if saldo_dolares and saldo_dolares != False %}
+    {% if not cuenta %}
+        <div class="mensaje_cuenta">{{ mensaje }}</div>
+    {% else %}
+        <section class="stats-grid">
             <div class="stat-card stat-card--highlight">
-                <span class="stat-card__label">Caja de Ahorro en Dolares</span>
-                <div class="stat-card__value">USD{{ saldo_disponible_dolar }}</div>
+                <span class="stat-card__label">Caja de Ahorro</span>
+                <div class="stat-card__value">${{ saldo_disponible }}</div>
             </div>
-        {% endif %}
-
-        {% if visa_credito %}
-            <div class="stat-card">
-                <div class="stat-card__header">
-                    <span class="stat-card__name">Visa</span>
-                    <span class="stat-card__badge">Crédito</span>
+            {% if saldo_dolares and saldo_dolares != False %}
+                <div class="stat-card stat-card--highlight">
+                    <span class="stat-card__label">Caja de Ahorro en Dolares</span>
+                    <div class="stat-card__value">USD{{ saldo_disponible_dolar }}</div>
                 </div>
-                <div class="stat-card__details">
-                    <div class="detail-row">
-                        <span>Disponible:</span>
-                        <strong> $ {{ visa_credito_disponible }}</strong>
-                    </div>
-                    <div class="detail-row">
-                        <span>Límite:</span>
-                        <span class="text-muted"> $ {{ visa_credito_limite}}</span>
-                    </div>
+            {% endif %}
 
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-bar__fill" style="width: 45%;"></div>
+            {% if visa_credito %}
+                <div class="stat-card">
+                    <div class="stat-card__header">
+                        <span class="stat-card__name">Visa</span>
+                        <span class="stat-card__badge">Crédito</span>
+                    </div>
+                    <div class="stat-card__details">
+                        <div class="detail-row">
+                            <span>Disponible:</span>
+                            <strong> $ {{ visa_credito_disponible }}</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span>Límite:</span>
+                            <span class="text-muted"> $ {{ visa_credito_limite}}</span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-bar__fill" style="width: 45%;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
-
-        {% if visa_debito %}
-            <div class="stat-card">
-                <div class="stat-card__header">
-                    <span class="stat-card__name">Visa</span>
-                    <span class="stat-card__badge">Debito</span>
-                </div>
-                <div class="stat-card__details">
-                    <div class="detail-row">
-                        <p>Disponible: <strong>${{ visa_debito_disponible }}</strong></p>
-                    </div>
-                    <div class="detail-row">
-                        <p>Limite: <strong>${{ visa_debito_limite }}</strong></p>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-bar__fill" style="width: 70%;"></div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-        {% if master_credito %}
-            <div class="stat-card">
-                <div class="stat-card__header">
-                    <span class="stat-card__name">Mastercard</span>
-                    <span class="stat-card__badge">Crédito</span>
-                </div>
-                <div class="stat-card__details">
-                    <div class="detail-row">
-                        <p>Disponible: <strong>${{ master_credito_disponible }}</strong></p>
-                    </div>
-                    <div class="detail-row">
-                        <p>Limite: <strong>${{ master_credito_limite }}</strong></p>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-bar__fill" style="width: 70%;"></div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-        {% if master_debito %}
-            <div class="stat-card">
-                <div class="stat-card__header">
-                    <span class="stat-card__name">Mastercard</span>
-                    <span class="stat-card__badge">Debito</span>
-                </div>
-                <div class="stat-card__details">
-                    <div class="detail-row">
-                        <p>Disponible: <strong>${{ master_debito_disponible }}</strong></p>
-                    </div>
-                    <div class="detail-row">
-                        <p>Limite: <strong>${{ master_debito_limite }}</strong></p>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-bar__fill" style="width: 70%;"></div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    </section>
-
-    <section class="activity-section">
-        <h3 class="section-title">Actividad reciente</h3>
-        <div class="activity-list">
-            {% for mov in movimientos %}
-            <div class="activity-item">
-                <div class="activity-item__info">
-                    <span class="activity-item__type">{{ mov.tipo }}</span>
-                    <span class="activity-item__date">{{ mov.fecha }}</span>
-                </div>
-                <div class="activity-item__amount {% if mov.monto > 0 %}positive{% else %}negative{% endif %}">
-                    {% if mov.monto > 0 %}+{% endif %}${{ mov.monto }}
-                </div>
-            </div>
-            {% endfor %}
-
-            {% if not movimientos %}
-            <p class="empty-msg">No hay movimientos registrados.</p>
             {% endif %}
 
-            <a href="/cliente/movimientos" class="activity-more">Ver toda la actividad →</a>
-        </div>
-    </section>
+            {% if visa_debito %}
+                <div class="stat-card">
+                    <div class="stat-card__header">
+                        <span class="stat-card__name">Visa</span>
+                        <span class="stat-card__badge">Debito</span>
+                    </div>
+                    <div class="stat-card__details">
+                        <div class="detail-row">
+                            <p>Disponible: <strong>${{ visa_debito_disponible }}</strong></p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Limite: <strong>${{ visa_debito_limite }}</strong></p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar__fill" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if master_credito %}
+                <div class="stat-card">
+                    <div class="stat-card__header">
+                        <span class="stat-card__name">Mastercard</span>
+                        <span class="stat-card__badge">Crédito</span>
+                    </div>
+                    <div class="stat-card__details">
+                        <div class="detail-row">
+                            <p>Disponible: <strong>${{ master_credito_disponible }}</strong></p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Limite: <strong>${{ master_credito_limite }}</strong></p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar__fill" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if master_debito %}
+                <div class="stat-card">
+                    <div class="stat-card__header">
+                        <span class="stat-card__name">Mastercard</span>
+                        <span class="stat-card__badge">Debito</span>
+                    </div>
+                    <div class="stat-card__details">
+                        <div class="detail-row">
+                            <p>Disponible: <strong>${{ master_debito_disponible }}</strong></p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Limite: <strong>${{ master_debito_limite }}</strong></p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar__fill" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+        <section class="activity-section">
+            <h3 class="section-title">Actividad reciente</h3>
+            <div class="activity-list">
+                {% for mov in movimientos %}
+                <div class="activity-item">
+                    <div class="activity-item__info">
+                        <span class="activity-item__type">{{ mov.tipo }}</span>
+                        <span class="activity-item__date">{{ mov.fecha }}</span>
+                    </div>
+                    <div class="activity-item__amount {% if mov.monto > 0 %}positive{% else %}negative{% endif %}">
+                        {% if mov.monto > 0 %}+{% endif %}${{ mov.monto }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if not movimientos %}
+                <p class="empty-msg">No hay movimientos registrados.</p>
+                {% endif %}
+
+                <a href="/cliente/movimientos" class="activity-more">Ver toda la actividad →</a>
+            </div>
+        </section>
+    {% endif %}
+    
 </div>
 {% endblock %}
