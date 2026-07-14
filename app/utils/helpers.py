@@ -65,20 +65,19 @@ def loguear_cuenta(dni, pin):
 
 def loguear_cuenta_admin(dni, pin):
     admin = Usuario.query.filter_by(dni=dni,pin=pin,role="empleado").first()
-    nombre_admin = Empleado.query.filter_by(dni=dni).first()
-    
+
     if not admin:
-        return render_template("auth/login_admin.html", mensaje="⚠️ El DNI no se encuentra registrado.")
+        return render_template("auth/login_admin.html",mensaje="❌ DNI o PIN incorrectos.")
 
-    nombre_empleado = nombre_admin.nombre
+    empleado = Empleado.query.filter_by(dni=dni).first()
 
-    if admin.pin == pin:
-        session['role'] = 'empleado'
-        session['nombre'] = nombre_empleado
-        session['admin_dni'] = dni
-        return render_template("empleado/empleado.html")
-    else:
-        return render_template("auth/login_admin.html", mensaje="❌ DNI o PIN incorrectos.")
+    session["dni"] = admin.dni
+    session["role"] = "empleado"
+
+    if empleado:
+        session["nombre"] = empleado.nombre
+
+    return redirect(url_for("empleado.dashboard_empleado"))
 
 
 def restablecer_pin(dni, pin, pin_reingresar):
