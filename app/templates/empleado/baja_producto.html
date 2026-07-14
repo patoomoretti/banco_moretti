@@ -31,20 +31,20 @@
                     <option value="" disabled selected>-- Seleccione un producto --</option>
                     
                     {# Leemos directamente las claves del diccionario cliente #}
-                    {% if cliente.tarjeta_credito_visa %}
-                        <option value="credito_visa">Visa Crédito (Nro: {{ cliente.tarjeta_credito_visa.numero }})</option>
+                    {% if cliente.credito_visa %}
+                        <option value="credito_visa">Visa Crédito (Nro: {{ cliente.credito_visa.numero }})</option>
                     {% endif %} 
                     
-                    {% if cliente.tarjeta_debito_visa %}
-                        <option value="debito_visa">Visa Débito (Nro: {{ cliente.tarjeta_debito_visa.numero }})</option>
+                    {% if cliente.debito_visa %}
+                        <option value="debito_visa">Visa Débito (Nro: {{ cliente.debito_visa.numero }})</option>
                     {% endif %}
                     
-                    {% if cliente.tarjeta_credito_master %}
-                        <option value="credito_master">MasterCard Crédito (Nro: {{ cliente.tarjeta_credito_master.numero }})</option>
+                    {% if cliente.credito_master %}
+                        <option value="credito_master">MasterCard Crédito (Nro: {{ cliente.credito_master.numero }})</option>
                     {% endif %}
                     
-                    {% if cliente.tarjeta_debito_master %}
-                        <option value="debito_master">MasterCard Débito (Nro: {{ cliente.tarjeta_debito_master.numero }})</option>
+                    {% if cliente.debito_master %}
+                        <option value="debito_master">MasterCard Débito (Nro: {{ cliente.debito_master.numero }})</option>
                     {% endif %}
                 </select>
             </div>
