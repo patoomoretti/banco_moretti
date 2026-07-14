@@ -11,24 +11,24 @@ from database import db
 def obtener_dashboard():
     clientes = Cliente.query.all()
     movimientos = Movimiento.query.all()
-    
+
     total_clientes = len(clientes)
     hoy = datetime.now().strftime("%d-%m-%y")
     total_depositos_hoy = 0
-    cant_transferencias_24h = 0 
-    
+    cant_transferencias_24h = 0
+
     for movimiento in movimientos:
         fecha_movimiento = movimiento.fecha.split()[0]
+
         if fecha_movimiento == hoy:
             if movimiento.tipo == "deposito":
                 total_depositos_hoy += movimiento.monto
             elif movimiento.tipo == "transferencia":
                 cant_transferencias_24h += 1
 
-    # ultimos 3 clientes
     ultimos_clientes = Cliente.query.order_by(Cliente.id.desc()).limit(3).all()
 
-    return render_template("empleado/dashboard.html",total_clientes=total_clientes,total_depositos_hoy=total_depositos_hoy,cant_transferencias_24h=cant_transferencias_24h,ultimos_clientes=ultimos_clientes,hoy=hoy)
+    return {"total_clientes": total_clientes,"total_depositos_hoy": total_depositos_hoy,"cant_transferencias_24h": cant_transferencias_24h,"ultimos_clientes": ultimos_clientes,"hoy": hoy,}
 
 
 def alta_cliente(nombre, apellido, dni, direccion, piso, departamento, telefono, email):
@@ -66,8 +66,10 @@ def baja_cliente(dni):
         cliente = Cliente.query.filter_by(dni=dni).first()
         if not cliente:
             return render_template("empleado/eliminar_cliente.html", mensaje="⚠️ El cliente no existe.")
+        
         db.session.delete(cliente)
         db.session.commit()
+        print("Cliente eliminado:", cliente)
         return render_template("empleado/eliminar_cliente.html", mensaje="✅ Cliente eliminado correctamente")
     except Exception as e:
         db.session.rollback()
@@ -91,10 +93,11 @@ def obtener_clientes():
 
 def obtener_perfil_cliente(dni):
     
-    cliente = Cuenta.query.filter_by(dni=dni).first()
+    cliente = Cliente.query.filter_by(dni=dni).first()
+    cuenta = Cuenta.query.filter_by(dni=dni).first()
     movimientos = Movimiento.query.filter_by(dni=dni).all() # Devuelve todos los movimientos
     
-    return {"cliente": cliente,"movimientos": movimientos}
+    return {"cliente": cliente,"cuenta":cuenta,"movimientos": movimientos}
 
 
 def modificar_datos_cliente(dni,direccion,piso,departamento,telefono,email):
@@ -200,27 +203,54 @@ def alta_producto(dni, marca, tipo_producto):
         return render_template("empleado/alta_producto.html", mensaje=f"❌ Error inesperado: {str(e)}")
         
 
-# chequear la baja porque tengo que ser mas especifico en visa credito o visa debito
-def baja_producto(dni,tipo_producto):
+def obtener_productos_cliente(dni):
     '''
-    Buscamos el DNI y le damos de baja un producto seleccionado
+        Ingresamos DNI y obtenemos los productos que tiene
     '''
+
+    cliente = Cliente.query.filter_by(dni=dni).first()
+    tarjetas = Tarjeta.query.filter_by(dni=dni).all()
+
+    if not cliente:
+        return {"cliente": None,"dni_buscado": dni,"mensaje": "⚠️ El cliente no existe."}
+
+    productos = {
+        "credito_visa": None,
+        "debito_visa": None,
+        "credito_master": None,
+        "debito_master": None
+    }
+
+    for tarjeta in tarjetas:
+        clave = f"{tarjeta.tipo}_{tarjeta.marca}"
+        productos[clave] = tarjeta
+
+    return {"cliente": productos,"dni_buscado": dni,"mensaje": None}
+    
+
+def baja_producto(dni, producto):
+    '''
+        Se le da de baja a un producto deseado por el cliente. Tarjeta Credito Visa/Master y Tarjeta Debito Visa/Master
+    '''
+    
     try:
+        tipo, marca = producto.split("_")
         cliente = Cliente.query.filter_by(dni=dni).first()
-        tarjeta = Tarjeta.query.filter_by(dni=dni,tipo=tipo_producto).first()
-        
+        tarjeta = Tarjeta.query.filter_by(dni=dni,tipo=tipo,marca=marca).first()
+
         if not cliente:
-            return render_template("empleado/baja_producto.html", mensaje="⚠️ El cliente no existe.")
+            return render_template("empleado/baja_producto.html",mensaje="⚠️ El cliente no existe.")
 
         if not tarjeta:
-            return render_template("empleado/baja_producto.html", mensaje="⚠️ El cliente no posee esa tarjeta.")
+            return render_template("empleado/baja_producto.html",mensaje="⚠️ El cliente no posee esa tarjeta.")
 
         db.session.delete(tarjeta)
         db.session.commit()
-        return render_template("empleado/baja_producto.html", mensaje="✅ Producto eliminado exitosamente")
+
+        return render_template("empleado/baja_producto.html",mensaje="✅ Producto eliminado correctamente.")
     except Exception as e:
         db.session.rollback()
-        return render_template("empleado/baja_producto.html", mensaje=f"❌ Error inesperado: {str(e)}")
+        return render_template("empleado/baja_producto.html",mensaje=f"❌ Error inesperado: {e}")
 
 
 def solicitar_prestamo(dni, monto, cuotas, tasa_interes, destino):
@@ -249,7 +279,6 @@ def solicitar_prestamo(dni, monto, cuotas, tasa_interes, destino):
         db.session.add(nuevo_prestamo)
         db.session.commit()
         return render_template("empleado/solicitar_prestamo.html", mensaje="✅ El prestamo ha sido otorgado")
-
     except Exception as e:
         db.session.rollback()
         return render_template("empleado/solicitar_prestamo.html", mensaje=f"❌ Error inesperado: {str(e)}")

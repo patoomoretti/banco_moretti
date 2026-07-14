@@ -17,8 +17,8 @@ def empleado_inicio():
 @empleado_required
 def dashboard_empleado():    
     datos = obtener_dashboard()
-    return render_template("empleado/dashboard.html",**datos)
-    
+    return render_template("empleado/dashboard.html", **datos)
+
     
 @empleado_bp.route("/buscar_cliente", methods=["GET","POST"])
 @empleado_required
@@ -62,14 +62,14 @@ def eliminar_cliente_view():
 @empleado_required
 def datos_cliente():
     clientes = obtener_clientes()
-    return render_template("empleado/datos_cliente.html", **clientes)
+    return render_template("empleado/datos_cliente.html", clientes=clientes)
 
 
 @empleado_bp.route("/perfil_cliente/<int:dni>")
 @empleado_required
 def perfil_cliente(dni):
     perfil = obtener_perfil_cliente(dni)
-    return render_template("empleado/perfil_cliente.html", clientes=perfil)
+    return render_template("empleado/perfil_cliente.html", **perfil)
     
 
 @empleado_bp.route("/actualizar_cliente", methods=["POST"])
@@ -112,28 +112,22 @@ def alta_producto_view():
     return render_template("empleado/alta_producto.html",mensaje=None)
 
 
-# aca estoy haciendo ahora. ACA ME QUEDE
 @empleado_bp.route("/baja_producto", methods=["GET", "POST"])
 @empleado_required
 def baja_producto_view():
-    
-    if request.method == "POST":
-        dni = int(request.form.get("dni"))
-        tipo_producto = str(request.form.get("producto_baja"))             
-        baja_producto(dni,tipo_producto)
 
-    return render_template("empleado/baja_producto.html",mensaje=None)
+    dni = request.form.get("dni")
+    datos = obtener_productos_cliente(dni)
+    return render_template("empleado/baja_producto.html", **datos)
 
 
-@empleado_bp.route("/confirmar_baja_producto", methods=["POST","GET"])
+@empleado_bp.route("/confirmar_baja_producto", methods=["POST"])
 @empleado_required
 def confirmar_baja_view():
-    if request.method == "POST":
-        dni = int(request.form.get("dni"))
-        tipo_producto = str(request.form.get("producto_baja"))
-        return baja_producto(dni,tipo_producto)
-    
-    return render_template("empleado/baja_producto.html",mensaje=None)
+    dni = request.form.get("dni")
+    producto = request.form.get("producto")
+
+    return baja_producto(dni, producto)
 
 
 @empleado_bp.route("/solicitar_prestamo",methods=["GET","POST"])
