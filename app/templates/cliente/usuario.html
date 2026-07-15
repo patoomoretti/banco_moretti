@@ -12,11 +12,13 @@
         <div class="mensaje_cuenta">{{ mensaje }}</div>
     {% else %}
         <section class="stats-grid">
-            <div class="stat-card stat-card--highlight">
-                <span class="stat-card__label">Caja de Ahorro</span>
-                <div class="stat-card__value">${{ saldo_disponible }}</div>
-            </div>
-            {% if saldo_dolares and saldo_dolares != False %}
+            {% if caja_ahorro %}
+                <div class="stat-card stat-card--highlight">
+                    <span class="stat-card__label">Caja de Ahorro</span>
+                    <div class="stat-card__value">${{ saldo_disponible }}</div>
+                </div>
+            {% endif %}
+            {% if caja_ahorro_dolar %}
                 <div class="stat-card stat-card--highlight">
                     <span class="stat-card__label">Caja de Ahorro en Dolares</span>
                     <div class="stat-card__value">USD{{ saldo_disponible_dolar }}</div>
@@ -125,7 +127,7 @@
                 {% endfor %}
 
                 {% if not movimientos %}
-                <p class="empty-msg">No hay movimientos registrados.</p>
+                    <p class="empty-msg">No hay movimientos registrados.</p>
                 {% endif %}
 
                 <a href="/cliente/movimientos" class="activity-more">Ver toda la actividad →</a>
