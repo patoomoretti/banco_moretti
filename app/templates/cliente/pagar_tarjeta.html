@@ -27,8 +27,8 @@
                     <label class="form-field-label">Elegir tarjeta</label>
                     <select class="input-pro-field select-pro" name="tarjeta" required>
                         <option value="" disabled selected>Seleccioná una tarjeta</option>
-                        <option value="visa" {% if tarjeta == "visa" %}selected{% endif %}>Visa</option>
-                        <option value="master" {% if tarjeta == "mastercard" %}selected{% endif %}>MasterCard</option>
+                        <option value="credito_visa" {% if tarjeta == "visa" %}selected{% endif %}>Visa</option>
+                        <option value="credito_master" {% if tarjeta == "master" %}selected{% endif %}>MasterCard</option>
                     </select>
                 </div>
 
@@ -78,14 +78,44 @@
 </div>
 
 <script>
+    const deudaVisa = parseFloat("{{ deuda_visa or 0 }}");
+    const deudaMaster = parseFloat("{{ deuda_master or 0 }}");
+</script>
+
+<script>
 document.addEventListener("DOMContentLoaded", () => {
+
     const radiosPago = document.querySelectorAll('input[name="tipo_pago"]');
+    const selectTarjeta = document.querySelector('select[name="tarjeta"]');
+
     const divTotal = document.getElementById("pagoTotal");
     const divParcial = document.getElementById("pagoParcial");
     const inputParcial = document.getElementById("montoParcialInput");
 
+    const montoTotal = document.querySelector(".info-box-amount");
+    const deudaActual = document.querySelector(".form-field-help");
+
+    function obtenerDeuda() {
+        if (selectTarjeta.value === "credito_visa") {
+            return deudaVisa;
+        }
+
+        if (selectTarjeta.value === "credito_master") {
+            return deudaMaster;
+        }
+
+        return 0;
+    }
+
     function actualizarVista() {
+
+        const deuda = obtenerDeuda();
+
+        montoTotal.textContent = "$" + deuda.toFixed(2);
+        deudaActual.textContent = "Deuda actual: $" + deuda.toFixed(2);
+
         const seleccionado = document.querySelector('input[name="tipo_pago"]:checked');
+
         if (!seleccionado) return;
 
         if (seleccionado.value === "total") {
@@ -99,8 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    radiosPago.forEach(r => r.addEventListener("change", actualizarVista));
+    radiosPago.forEach(radio => {
+        radio.addEventListener("change", actualizarVista);
+    });
+
+    selectTarjeta.addEventListener("change", actualizarVista);
     actualizarVista();
+
 });
 </script>
 {% endblock %}
